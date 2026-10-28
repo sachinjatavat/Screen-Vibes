@@ -54,12 +54,12 @@ function render() {
   // Status indicator
   const isRunning = s.waveEnabled !== false;
   $('status-text').textContent = isRunning ? 'Wave Running' : 'Wave Paused';
-  $('status-pill').style.color = isRunning ? '#00f5ff' : '#8b8ba0';
-  $('status-pill').style.borderColor = isRunning ? 'rgba(0, 245, 255, 0.3)' : 'rgba(255, 255, 255, 0.1)';
+  $('status-pill').style.color = isRunning ? '#0284c7' : '#64748b';
+  $('status-pill').style.borderColor = isRunning ? '#b0bcd0' : '#cbd5e1';
   const dot = $('status-pill').querySelector('.status-dot');
   if (dot) {
-    dot.style.background = isRunning ? '#00f5ff' : '#606075';
-    dot.style.boxShadow = isRunning ? '0 0 8px #00f5ff' : 'none';
+    dot.style.background = isRunning ? '#10b981' : '#94a3b8';
+    dot.style.boxShadow = isRunning ? '0 0 8px #10b981' : 'none';
   }
 
   // Wave controls

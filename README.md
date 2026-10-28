@@ -5,7 +5,7 @@
 
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-blue?style=flat-square&logo=windows)](https://github.com/sachinjatavat/Screen-Vibes)
 [![Electron](https://img.shields.io/badge/Electron-33.4-informational?style=flat-square&logo=electron)](https://github.com/sachinjatavat/Screen-Vibes)
-[![UI Theme](https://img.shields.io/badge/Theme-Claymorphism-ff00e5?style=flat-square)](https://github.com/sachinjatavat/Screen-Vibes)
+[![UI Theme](https://img.shields.io/badge/Theme-White%20Skeuomorphism-0284c7?style=flat-square)](https://github.com/sachinjatavat/Screen-Vibes)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](https://github.com/sachinjatavat/Screen-Vibes)
 
 ---
@@ -20,7 +20,7 @@ The app features two core lighting engines that can operate independently or sim
 1. **The Continuous Traveling Light Wave**: A luminous light wave with an intense comet head and decaying neon tail circulating around all four borders of your screen (Top, Right, Bottom, Left) with seamless corner rounding and zero-jump direction reversal.
 2. **The Audio-Reactive Visualizer**: A direct Windows loopback audio engine capturing system audio in real-time (Spotify, YouTube, games, media players) and visualizing sound waves, bars, ambient glows, or bass pulses along the screen bezel.
 
-Screen Vibes is styled with a tactile, custom **Claymorphism** interface—featuring inflated 3D surfaces, soft-depth shadows, pressable tactile buttons, a live miniature laptop screen preview, and instant customization sliders.
+Screen Vibes is styled with a tactile, custom **White Skeuomorphism** interface—featuring molded off-white chassis panels, metallic corner screws, an engraved author plaque, tactile mechanical push-buttons, recessed milled groove sliders, a live miniature laptop screen preview, and instant customization controls.
 
 ---
 
@@ -40,7 +40,7 @@ Screen Vibes is styled with a tactile, custom **Claymorphism** interface—featu
 - **↻ Clockwise**: A single light wave circulates clockwise around all four screen edges.
 - **↺ Anticlockwise**: A single light wave circulates counter-clockwise.
 - **⇄ Dual Waves (Intersecting)**: Two light waves circulate along the screen borders simultaneously in **opposite directions** (one clockwise, one anticlockwise). As they travel, they meet each other, **intersect and pass right through each other** with an amplified additive luminous flash, and continue circulating endlessly around the perimeter.
-- **Interactive Mini Screen Preview**: A miniature clay-bezeled laptop screen inside the settings panel renders a real-time 60 FPS visual preview of the wave(s), showing both single and dual crossing waves in real time.
+- **Interactive Mini Screen Preview**: A miniature aluminum-bezeled laptop screen inside the settings panel renders a real-time 60 FPS visual preview of the wave(s), showing both single and dual crossing waves in real time.
 
 ---
 
@@ -57,21 +57,24 @@ Screen Vibes is styled with a tactile, custom **Claymorphism** interface—featu
 
 ---
 
-### 🎨 4. Tactile Claymorphism User Interface
-Designed by **Sachin**, the settings panel departs from generic flat templates in favor of a rich **Claymorphism** design system:
-- **Pillowy 3D Clay Cards**: Deep slate surfaces (`#1e1e2f`) with dual inner highlights and soft ambient drop shadows.
-- **Tactile Clay Buttons**: Elevated, pressable buttons that physically depress when clicked.
-- **Clay Sliders & Switches**: Deep recessed groove tracks paired with inflated, glowing clay thumbs and knobs.
-- **Live Badges**: Real-time numeric readouts for speed, length, glow, and thickness.
-- **1-Click Theme Presets**:
-  - ⚡ **Cyber Neon** (Cyan + Hot Pink)
-  - 🌅 **Sunset Blaze** (Crimson + Gold)
-  - 🌊 **Deep Ocean** (Electric Blue + Aqua)
-  - 👾 **Matrix Glitch** (Cyber Green + Emerald)
-  - 🔮 **Vapor Violet** (Electric Purple + Pink)
-  - 🔥 **Solar Flare** (Ruby Red + Amber)
-  - 🌌 **Aurora Borealis** (Teal + Purple)
-  - 🌈 **RGB Rainbow** (Smooth multi-color Chroma spectrum)
+### 🎨 4. Tactile White Skeuomorphism User Interface
+Designed by **Sachin**, the settings panel departs from generic flat templates in favor of a clean, state-of-the-art **White Skeuomorphism** design system inspired by precision hardware and analog synthesizers:
+- **Molded White Chassis & Panels**: Satin-white physical slabs (`#edf1f6` to `#ffffff`) with dual specular inner rims, milled chamfers, and soft ambient drop shadows.
+- **Engraved Author Plaque**: Milled metallic top plate with realistic 45° slotted corner screws, debossed lettering, and an illuminated hardware badge `- Developed By Sachin`.
+- **Tactile Push-Buttons**: Extruded mechanical buttons with top specular highlights and realistic physical depression (`:active`) with illuminated sapphire/azure backlit keys when active.
+- **Milled Recessed Sliders**: Sunken groove channels with authentic depth paired with knurled metallic aluminum fader knobs.
+- **Rocker Slide Switches**: Deep oval troughs with ceramic sliding levers and ambient backlight states.
+- **Live Miniature Hardware Laptop**: An aluminum-bezel laptop mockup with screen glass glare and live 60 FPS synchronized perimeter wave simulation.
+- **Countersunk LCD Badges**: Recessed digital readouts for real-time speed, length, glow, and border thickness.
+- **Hardware Synth Presets**: 8 colored enamel push keys providing instant one-click lighting themes:
+  - ⚡ **Neon** (Cyan + Hot Pink)
+  - 🌅 **Sunset** (Crimson + Gold)
+  - 🌊 **Ocean** (Electric Blue + Deep Blue)
+  - 👾 **Matrix** (Cyber Green + Emerald)
+  - 🔮 **Purple** (Electric Violet + Neon Magenta)
+  - 🔥 **Fire** (Ruby Red + Amber)
+  - 🌌 **Aurora** (Teal + Sky Blue)
+  - 🌈 **Rainbow** (Smooth multi-color Chroma spectrum)
 
 ---
 

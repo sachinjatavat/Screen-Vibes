@@ -160,7 +160,7 @@ function createPanel(shouldShow = true) {
     show: shouldShow,
     autoHideMenuBar: true,
     title: 'Screen Vibes - Developed By Sachin',
-    backgroundColor: '#1c1c2b',
+    backgroundColor: '#edf1f6',
     icon: path.join(__dirname, 'icon.png'),
     webPreferences: { preload: path.join(__dirname, 'preload.js') },
   });

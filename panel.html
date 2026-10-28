@@ -5,21 +5,32 @@
 <title>Screen Vibes - Developed By Sachin</title>
 <style>
   :root {
-    --clay-bg: #1c1c2b;
-    --card-clay: #26263b;
-    --card-shadow: 12px 18px 30px rgba(0, 0, 0, 0.45), -4px -4px 10px rgba(255, 255, 255, 0.05), inset 3px 3px 6px rgba(255, 255, 255, 0.12), inset -4px -4px 8px rgba(0, 0, 0, 0.5);
+    --chassis-bg: #edf1f6;
+    --panel-bg: linear-gradient(180deg, #ffffff 0%, #f6f8fc 65%, #edf1f7 100%);
+    --card-border: #c8d3e2;
+    --card-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #dbe2ed, 0 1px 3px rgba(18, 28, 48, 0.05), 0 8px 24px rgba(18, 28, 48, 0.07);
     
-    --btn-clay: 6px 9px 18px rgba(0, 0, 0, 0.4), -2px -2px 6px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.16), inset -3px -3px 6px rgba(0, 0, 0, 0.45);
-    --btn-hover: 8px 12px 22px rgba(0, 0, 0, 0.48), -3px -3px 8px rgba(255, 255, 255, 0.12), inset 2px 2px 5px rgba(255, 255, 255, 0.22), inset -3px -3px 6px rgba(0, 0, 0, 0.4);
-    --btn-active: inset 4px 4px 8px rgba(0, 0, 0, 0.65), inset -2px -2px 4px rgba(255, 255, 255, 0.06), 2px 3px 6px rgba(0, 0, 0, 0.35);
+    --btn-normal: linear-gradient(180deg, #ffffff 0%, #f4f6fa 45%, #dde4ef 100%);
+    --btn-border: #b2bfd4;
+    --btn-shadow: inset 0 1px 0 #ffffff, inset 0 -2px 0 #cbd5e4, 0 3px 6px rgba(18, 28, 48, 0.1), 0 1px 2px rgba(18, 28, 48, 0.06);
     
-    --groove-clay: inset 4px 4px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 4px rgba(255, 255, 255, 0.05);
-    --thumb-clay: 4px 6px 14px rgba(0, 0, 0, 0.45), 0 0 10px rgba(0, 245, 255, 0.4), inset 2px 2px 4px #ffffff, inset -3px -3px 5px rgba(0, 140, 180, 0.7);
+    --btn-hover: linear-gradient(180deg, #ffffff 0%, #f8faff 45%, #e4ebf5 100%);
+    --btn-active: linear-gradient(180deg, #d3dae7 0%, #e4eaf4 100%);
+    --btn-active-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 1px 0 #ffffff;
+    
+    --groove-bg: linear-gradient(180deg, #bdc8d7 0%, #d8e2ee 60%, #edf2f9 100%);
+    --groove-border: #abb9cd;
+    --groove-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.25), inset 0 1px 1px rgba(15, 23, 42, 0.15), 0 1px 0 #ffffff;
+    
+    --thumb-knob: radial-gradient(circle at 35% 30%, #ffffff 0%, #e8edf5 45%, #b4c0d4 85%, #94a3bc 100%);
+    --thumb-border: #7c8b9f;
+    --thumb-shadow: 0 3px 7px rgba(15, 23, 42, 0.24), 0 1px 2px rgba(15, 23, 42, 0.12), inset 0 1px 1px #ffffff, inset 0 -1px 2px rgba(0, 0, 0, 0.15);
 
-    --accent: #00f5ff;
-    --accent-pink: #ff00d4;
-    --text-primary: #f2f2fa;
-    --text-muted: #9a9ab8;
+    --accent-blue: #0284c7;
+    --accent-blue-active: linear-gradient(180deg, #0284c7 0%, #0369a1 55%, #075985 100%);
+    --text-primary: #192130;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
   }
   
   * { box-sizing: border-box; }
@@ -27,7 +38,7 @@
   body {
     margin: 0;
     padding: 16px 18px 30px;
-    background: var(--clay-bg);
+    background: var(--chassis-bg);
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     user-select: none;
@@ -35,281 +46,342 @@
   }
   
   ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: var(--clay-bg); }
+  ::-webkit-scrollbar-track { background: #e2e8f2; }
   ::-webkit-scrollbar-thumb {
-    background: #33334d;
-    border-radius: 12px;
-    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1);
+    background: #b4c0d2;
+    border-radius: 8px;
+    border: 2px solid #e2e8f2;
   }
-  ::-webkit-scrollbar-thumb:hover { background: #444466; }
+  ::-webkit-scrollbar-thumb:hover { background: #96a5bc; }
 
   /* ========================================= */
-  /* PROMINENT TOP DEVELOPER HEADER CARD       */
+  /* SKEUOMORPHIC ENGRAVED TOP PLAQUE          */
   /* ========================================= */
   .developer-header-card {
-    background: #2b2b42;
-    border-radius: 26px;
-    padding: 18px 20px;
+    position: relative;
+    background: var(--panel-bg);
+    border-radius: 18px;
+    padding: 16px 20px;
     margin-bottom: 16px;
+    border: 1px solid var(--card-border);
     box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 14px;
   }
+  
+  /* Metallic Corner Screws with 45deg Slot */
+  .hardware-screw {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d8e0ec 50%, #9aa6b8 100%);
+    border: 1px solid #8290a4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 1px 0 #ffffff;
+    pointer-events: none;
+  }
+  .hardware-screw::after {
+    content: "";
+    position: absolute;
+    top: 3.5px;
+    left: 1.5px;
+    width: 5px;
+    height: 1px;
+    background: #505c70;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: rotate(45deg);
+  }
+  .hardware-screw.top-left { top: 8px; left: 8px; }
+  .hardware-screw.top-right { top: 8px; right: 8px; }
+  .hardware-screw.bottom-left { bottom: 8px; left: 8px; }
+  .hardware-screw.bottom-right { bottom: 8px; right: 8px; }
+
   .brand-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
   }
-  .app-clay-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #00d2df 0%, #d800c2 100%);
-    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+  .app-skeuo-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f2 100%);
+    border: 1px solid #b8c4d6;
+    box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #cbd5e4, 0 3px 7px rgba(18, 28, 48, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 24px;
   }
-  .brand-text h1 {
+  .brand-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-title-row h1 {
     font-size: 20px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -0.02em;
+    color: #141c2b;
+    text-shadow: 0 1px 0 #ffffff;
+  }
+  .version-tag {
+    background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    font-size: 9px;
     font-weight: 800;
-    margin: 0 0 3px;
-    letter-spacing: -0.01em;
-    background: linear-gradient(135deg, #00f5ff 0%, #ff00e5 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 3px rgba(2, 132, 199, 0.35);
   }
   .brand-text .app-sub {
     font-size: 11px;
     font-weight: 600;
     color: var(--text-muted);
-    margin: 0;
+    margin: 3px 0 0;
+    text-shadow: 0 1px 0 #ffffff;
   }
+  
   .dev-badge-wrap {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 6px;
+    gap: 7px;
   }
   .dev-name-pill {
-    background: #363650;
-    color: #00f5ff;
-    padding: 7px 15px;
-    border-radius: 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #e8edf6 100%);
+    color: #01579b;
+    padding: 6px 14px;
+    border-radius: 14px;
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    box-shadow: var(--btn-clay);
-    border: 1px solid rgba(0, 245, 255, 0.3);
+    border: 1px solid #b0bcd0;
+    box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #cbd5e4, 0 2px 5px rgba(18, 28, 48, 0.08);
     display: inline-flex;
     align-items: center;
     gap: 7px;
+    text-shadow: 0 1px 0 #ffffff;
   }
-  .dev-name-pill .dot {
+  .dev-name-pill .plaque-rivet {
+    color: #f59e0b;
+    font-size: 11px;
+    filter: drop-shadow(0 1px 0 #ffffff);
+  }
+  .status-pill {
+    background: #e2e8f2;
+    box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.15), 0 1px 0 #ffffff;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+    border: 1px solid #b8c4d6;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .status-pill .status-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #00f5ff;
-    box-shadow: 0 0 8px #00f5ff;
-  }
-  .status-pill {
-    background: #1c1c2b;
-    box-shadow: var(--groove-clay);
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 10px;
-    font-weight: 700;
-    color: #8c8cb0;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .status-pill .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #00f5ff;
-    box-shadow: 0 0 6px #00f5ff;
+    background: #10b981;
+    box-shadow: 0 0 7px #10b981, inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   /* ========================================= */
-  /* CLAYMORPHISM CARDS                        */
+  /* SKEUOMORPHIC HARDWARE CARDS               */
   /* ========================================= */
   .card {
-    background: var(--card-clay);
-    border-radius: 28px;
-    padding: 20px;
+    background: var(--panel-bg);
+    border-radius: 18px;
+    padding: 18px 20px;
     margin-bottom: 16px;
+    border: 1px solid var(--card-border);
     box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.06);
   }
   .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f4;
   }
   .card-title {
     font-size: 13px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: .08em;
-    color: #d2d2ea;
+    color: #242c3d;
+    text-shadow: 0 1px 0 #ffffff;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
   /* ========================================= */
-  /* CLAY LAPTOP PREVIEW CHASSIS               */
+  /* ALUMINUM LAPTOP PREVIEW BEZEL             */
   /* ========================================= */
   .preview-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 12px 0 18px;
+    margin: 10px 0 16px;
   }
   .laptop-bezel {
     position: relative;
-    background: #11111a;
-    border: 5px solid #34344d;
-    border-radius: 16px;
+    background: #0d1117;
+    border: 4px solid #d4dae6;
+    border-radius: 14px;
     padding: 6px;
-    box-shadow: 8px 12px 24px rgba(0, 0, 0, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.1), inset -3px -3px 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 1px 0 #ffffff, 0 8px 24px rgba(18, 28, 48, 0.18), 0 2px 4px rgba(18, 28, 48, 0.1);
   }
   .screen-reflection {
     position: absolute;
     top: 6px;
     left: 6px;
     right: 6px;
-    height: 42px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+    height: 44px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 60%);
     pointer-events: none;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   #previewCanvas {
     display: block;
-    background: #08080d;
-    border-radius: 10px;
+    background: #06080e;
+    border-radius: 8px;
   }
   .preview-badge {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background: rgba(18, 18, 28, 0.88);
-    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 3px 10px;
-    border-radius: 10px;
+    background: rgba(13, 17, 23, 0.88);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 3px 9px;
+    border-radius: 8px;
     font-size: 10px;
-    color: #a0a0c4;
+    color: #00f5ff;
     letter-spacing: 0.05em;
     font-weight: 700;
   }
   .laptop-base {
     width: 260px;
     height: 8px;
-    background: #34344d;
-    border-radius: 0 0 12px 12px;
+    background: linear-gradient(180deg, #d8dee8 0%, #bac4d4 100%);
+    border-radius: 0 0 10px 10px;
     margin: 0 auto;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.1);
-    border-top: 1px solid #444464;
+    border: 1px solid #a8b4c6;
+    border-top: none;
+    box-shadow: 0 4px 10px rgba(18, 28, 48, 0.12);
   }
 
   /* ========================================= */
-  /* CLAY DIRECTION BUTTONS                    */
+  /* PUSH-BUTTONS & DIRECTION SWITCHERS        */
   /* ========================================= */
   .dir-group {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .dir-btn {
-    background: #323249;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    color: var(--text-primary);
-    padding: 13px 10px;
-    border-radius: 18px;
+    background: var(--btn-normal);
+    border: 1px solid var(--btn-border);
+    color: #1e2432;
+    padding: 12px 10px;
+    border-radius: 14px;
     cursor: pointer;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    box-shadow: var(--btn-clay);
-    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 6px;
+    box-shadow: var(--btn-shadow);
+    text-shadow: 0 1px 0 #ffffff;
+    transition: all 0.15s ease;
+    user-select: none;
   }
   .dir-btn .icon {
     font-size: 20px;
     line-height: 1;
+    filter: drop-shadow(0 1px 0 #ffffff);
   }
   .dir-btn:hover {
-    background: #3c3c58;
-    transform: translateY(-2px);
-    box-shadow: var(--btn-hover);
+    background: var(--btn-hover);
+    box-shadow: inset 0 1px 0 #ffffff, inset 0 -2px 0 #cbd5e4, 0 5px 12px rgba(18, 28, 48, 0.14);
+    transform: translateY(-1px);
   }
   .dir-btn:active {
+    background: var(--btn-active);
+    box-shadow: var(--btn-active-shadow);
     transform: translateY(2px);
-    box-shadow: var(--btn-active);
   }
   .dir-btn.active {
-    background: linear-gradient(135deg, #00d2df 0%, #d800c2 100%);
-    border-color: rgba(255, 255, 255, 0.35);
+    background: var(--accent-blue-active);
+    border-color: #0c4a6e;
     color: #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 245, 255, 0.45), inset 3px 3px 6px rgba(255, 255, 255, 0.4), inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -2px 0 rgba(0, 0, 0, 0.3), 0 0 16px rgba(2, 132, 199, 0.4), 0 4px 10px rgba(18, 28, 48, 0.18);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .dir-btn.active .icon {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
   }
 
   /* ========================================= */
-  /* CLAY CONTROLS & SLIDERS                   */
+  /* RECESSED GROOVE SLIDERS & CONTROLS        */
   /* ========================================= */
   .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin: 14px 0;
+    margin: 12px 0;
     font-size: 13px;
   }
   .row label {
-    color: #d6d6ec;
-    font-weight: 600;
+    color: var(--text-secondary);
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 7px;
+    text-shadow: 0 1px 0 #ffffff;
   }
   .val-badge {
-    color: #00f5ff;
+    color: #0284c7;
     font-size: 12px;
     font-weight: 800;
-    min-width: 50px;
+    min-width: 54px;
     text-align: right;
     font-variant-numeric: tabular-nums;
-    background: #171724;
-    padding: 4px 10px;
-    border-radius: 12px;
-    box-shadow: var(--groove-clay);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: #e2e8f2;
+    padding: 3px 8px;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.16), 0 1px 0 #ffffff;
+    border: 1px solid #b8c4d6;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   }
 
-  /* Clay Sliders */
+  /* Recessed Grooved Range Slider */
   input[type=range] {
     -webkit-appearance: none;
     appearance: none;
     width: 170px;
-    height: 12px;
-    background: #161623;
-    border-radius: 12px;
+    height: 10px;
+    background: var(--groove-bg);
+    border-radius: 999px;
     outline: none;
-    box-shadow: var(--groove-clay);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--groove-border);
+    box-shadow: var(--groove-shadow);
   }
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -317,77 +389,85 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #00f5ff;
+    background: var(--thumb-knob);
     cursor: pointer;
-    box-shadow: var(--thumb-clay);
-    transition: transform 0.15s, background 0.15s;
-    border: none;
+    border: 1px solid var(--thumb-border);
+    box-shadow: var(--thumb-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
-    background: #52f8ff;
+    transform: scale(1.12);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.3), 0 1px 3px rgba(15, 23, 42, 0.15), inset 0 1px 1px #ffffff;
+  }
+  input[type=range]::-webkit-slider-thumb:active {
+    transform: scale(1.05);
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #dce3ee 45%, #a6b4ca 85%, #8897b0 100%);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
-  /* Clay Toggle Switch */
+  /* Tactile Rocker / Slide Switch */
   .switch {
     position: relative;
     display: inline-block;
-    width: 54px;
-    height: 30px;
+    width: 52px;
+    height: 28px;
   }
   .switch input { opacity: 0; width: 0; height: 0; }
   .slider {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: #171725;
-    transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 30px;
-    box-shadow: var(--groove-clay);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(180deg, #bdc8d7 0%, #d8e2ee 100%);
+    transition: .25s ease;
+    border-radius: 20px;
+    border: 1px solid #abb9cd;
+    box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.28), 0 1px 0 #ffffff;
   }
   .slider:before {
     position: absolute;
     content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 3.5px;
-    background: #9090af;
-    transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #eef2f9 55%, #c2cde0 100%);
+    transition: .25s ease;
     border-radius: 50%;
-    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.45), inset 2px 2px 3px rgba(255, 255, 255, 0.4), inset -2px -2px 3px rgba(0, 0, 0, 0.4);
+    border: 1px solid #9aa7ba;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.22), inset 0 1px 1px #ffffff;
   }
   input:checked + .slider {
-    background-color: #133a46;
-    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.75), inset -1.5px -1.5px 3px rgba(0, 245, 255, 0.25);
+    background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+    border-color: #075985;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(2, 132, 199, 0.35), 0 1px 0 #ffffff;
   }
   input:checked + .slider:before {
     transform: translateX(24px);
-    background: #00f5ff;
-    box-shadow: 0 0 12px #00f5ff, inset 2px 2px 4px #ffffff, inset -2px -2px 4px rgba(0, 160, 200, 0.6);
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f0f4fa 55%, #dce4f0 100%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 1px #ffffff;
   }
 
-  /* Clay Select Dropdowns */
+  /* Tactile Select Dropdowns */
   select {
-    background: #323249;
+    background: var(--btn-normal);
     color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 8px 16px;
-    border-radius: 14px;
+    border: 1px solid var(--btn-border);
+    padding: 8px 14px;
+    border-radius: 12px;
     font-size: 13px;
     font-weight: 700;
     outline: none;
     cursor: pointer;
-    box-shadow: var(--btn-clay);
-    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: var(--btn-shadow);
+    text-shadow: 0 1px 0 #ffffff;
+    transition: all 0.15s ease;
   }
   select:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--btn-hover);
+    background: var(--btn-hover);
   }
   select:focus {
-    border-color: #00f5ff;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.25);
   }
 
   .color-picker-wrap {
@@ -400,21 +480,19 @@
     appearance: none;
     width: 44px;
     height: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    background: none;
-    padding: 0;
+    border: 1px solid #b8c4d6;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 3px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: var(--btn-clay);
-    transition: transform 0.15s;
+    box-shadow: var(--btn-shadow);
   }
-  input[type=color]:hover { transform: scale(1.08); }
   input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
-  input[type=color]::-webkit-color-swatch { border: none; border-radius: 10px; }
+  input[type=color]::-webkit-color-swatch { border: none; border-radius: 6px; }
 
   /* ========================================= */
-  /* CLAY PRESET BUTTONS                       */
+  /* HARDWARE SYNTH PRESET BUTTONS             */
   /* ========================================= */
   .presets {
     display: grid;
@@ -422,30 +500,29 @@
     gap: 10px;
   }
   .preset {
-    height: 44px;
-    border-radius: 16px;
-    border: 2px solid transparent;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
     cursor: pointer;
-    color: #fff;
+    color: #ffffff;
     font-size: 11px;
     font-weight: 800;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
-    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.45), inset 2px 2px 4px rgba(255, 255, 255, 0.3), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -2px 0 rgba(0, 0, 0, 0.25), 0 3px 7px rgba(18, 28, 48, 0.14);
+    transition: transform 0.15s, box-shadow 0.15s;
     outline: none;
   }
   .preset:hover {
-    border-color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.55), inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1.5px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -2px 0 rgba(0, 0, 0, 0.25), 0 5px 12px rgba(18, 28, 48, 0.2);
   }
   .preset:active {
-    transform: translateY(1px);
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.6);
+    transform: translateY(1.5px);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.35);
   }
 
   /* ========================================= */
-  /* CLAY CHECKBOXES                           */
+  /* SKEUOMORPHIC CHECKBOX TILES               */
   /* ========================================= */
   .edges-grid {
     display: grid;
@@ -457,24 +534,25 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #323249;
-    padding: 11px 15px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--btn-normal);
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--btn-border);
     cursor: pointer;
-    box-shadow: var(--btn-clay);
+    box-shadow: var(--btn-shadow);
     font-weight: 700;
-    transition: transform 0.15s, background 0.15s;
+    color: #1e2432;
+    text-shadow: 0 1px 0 #ffffff;
+    transition: all 0.15s ease;
   }
   .edge-checkbox:hover {
-    transform: translateY(-1px);
-    background: #3a3a55;
+    background: var(--btn-hover);
   }
   .edge-checkbox input {
     cursor: pointer;
-    accent-color: #00f5ff;
-    width: 18px;
-    height: 18px;
+    accent-color: #0284c7;
+    width: 17px;
+    height: 17px;
   }
 
   .collapsible-header {
@@ -495,20 +573,30 @@
 <body>
 
   <!-- ========================================= -->
-  <!-- UNMISSABLE CLAYMORPHIC TOP HEADER         -->
+  <!-- ENGRAVED WHITE SKEUOMORPHIC TOP HEADER    -->
   <!-- ========================================= -->
   <div class="developer-header-card">
+    <div class="hardware-screw top-left"></div>
+    <div class="hardware-screw top-right"></div>
+    <div class="hardware-screw bottom-left"></div>
+    <div class="hardware-screw bottom-right"></div>
+
     <div class="brand-left">
-      <div class="app-clay-icon">✨</div>
+      <div class="app-skeuo-icon">⚡</div>
       <div class="brand-text">
-        <h1>Screen Vibes</h1>
+        <div class="brand-title-row">
+          <h1>Screen Vibes</h1>
+          <span class="version-tag">PRO</span>
+        </div>
         <p class="app-sub">Ambient RGB Edges & Music Visualizer</p>
       </div>
     </div>
+    
     <div class="dev-badge-wrap">
-      <div class="dev-name-pill">
-        <span class="dot"></span>
+      <div class="dev-name-pill" title="Software Author & Creator">
+        <span class="plaque-rivet">★</span>
         <span>- Developed By Sachin</span>
+        <span class="plaque-rivet">★</span>
       </div>
       <div class="status-pill" id="status-pill">
         <span class="status-dot"></span>
@@ -529,7 +617,7 @@
       </label>
     </div>
 
-    <!-- Mini Visual Preview -->
+    <!-- Mini Visual Preview (Hardware Laptop Bezel) -->
     <div class="preview-wrapper">
       <div class="laptop-bezel">
         <div class="screen-reflection"></div>
@@ -613,7 +701,7 @@
     </div>
   </div>
 
-  <!-- CARD 2: Quick Presets -->
+  <!-- CARD 2: Quick Presets (Hardware Synth Buttons) -->
   <div class="card">
     <div class="card-title" style="margin-bottom: 14px;">
       <span>🎨</span> Theme Presets
@@ -654,7 +742,7 @@
 
       <div class="row">
         <label>Audio Rainbow Mode</label>
-        <input type="checkbox" id="rainbow" style="accent-color: #00f5ff; width: 18px; height: 18px;">
+        <input type="checkbox" id="rainbow" style="accent-color: #0284c7; width: 18px; height: 18px;">
       </div>
 
       <div class="row">
