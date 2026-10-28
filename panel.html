@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Screen Vibes Settings</title>
+<style>
+  :root {
+    --bg: #12121a;
+    --card-bg: #1a1a27;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --accent: #00f5ff;
+    --accent2: #ff00e5;
+    --text-primary: #f0f0f8;
+    --text-muted: #8c8ca6;
+    --track-bg: #272738;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 18px 20px 28px;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    user-select: none;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #2f2f44; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #40405e; }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .title-group h1 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    background: linear-gradient(135deg, #00f5ff 0%, #ff00e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  .title-group .sub {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin: 0;
+  }
+  .status-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: rgba(0, 245, 255, 0.12);
+    color: #00f5ff;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00f5ff;
+    box-shadow: 0 0 8px #00f5ff;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  /* Live Preview Section */
+  .preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0 16px;
+  }
+  .laptop-bezel {
+    position: relative;
+    background: #09090e;
+    border: 3px solid #303046;
+    border-radius: 9px;
+    padding: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 245, 255, 0.12);
+  }
+  .screen-reflection {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    height: 38px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  #previewCanvas {
+    display: block;
+    background: #07070b;
+    border-radius: 5px;
+  }
+  .preview-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #a0a0c0;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  .laptop-base {
+    width: 250px;
+    height: 6px;
+    background: #232334;
+    border-radius: 0 0 8px 8px;
+    margin: 0 auto;
+    border-top: 1px solid #383850;
+  }
+
+  /* Direction Button Group */
+  .dir-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .dir-btn {
+    background: #232335;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 10px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+  }
+  .dir-btn .icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+  .dir-btn:hover {
+    background: #2d2d44;
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+  }
+  .dir-btn.active {
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.2) 0%, rgba(255, 0, 229, 0.2) 100%);
+    border-color: #00f5ff;
+    box-shadow: 0 0 14px rgba(0, 245, 255, 0.35);
+    color: #fff;
+  }
+  .dir-btn.reverse:active {
+    transform: scale(0.96);
+  }
+
+  /* Form Rows */
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+  .row label {
+    color: #cfcfe2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .val-badge {
+    color: #00f5ff;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 44px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Range sliders */
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 170px;
+    height: 6px;
+    background: var(--track-bg);
+    border-radius: 4px;
+    outline: none;
+    transition: background 0.2s;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00f5ff;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 245, 255, 0.7);
+    transition: transform 0.15s, background 0.15s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #fff;
+  }
+
+  /* Toggle switch */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--track-bg);
+    transition: .3s;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #8b8ba0;
+    transition: .3s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: rgba(0, 245, 255, 0.3);
+    border-color: #00f5ff;
+  }
+  input:checked + .slider:before {
+    transform: translateX(20px);
+    background-color: #00f5ff;
+    box-shadow: 0 0 10px #00f5ff;
+  }
+
+  /* Inputs & Select */
+  select {
+    background: #252538;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+  }
+  select:focus { border-color: #00f5ff; }
+
+  .color-picker-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  input[type=color] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type=color]::-webkit-color-swatch { border: none; border-radius: 5px; }
+
+  /* Presets */
+  .presets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .preset {
+    height: 38px;
+    border-radius: 9px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+  .preset:hover {
+    border-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Edges grid */
+  .edges-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .edge-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #232335;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .edge-checkbox:hover { background: #2c2c42; }
+  .edge-checkbox input { cursor: pointer; accent-color: #00f5ff; }
+
+  .collapsible-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .collapse-arrow {
+    transition: transform 0.2s ease;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .collapsed .collapse-arrow { transform: rotate(-90deg); }
+  .collapsed + .collapsible-body { display: none; }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="title-group">
+      <h1>✨ Screen Vibes</h1>
+      <div class="sub">Continuous Traveling Light Wave & Ambient RGB Edge Visualizer</div>
+    </div>
+    <div class="status-pill" id="status-pill">
+      <span class="status-dot"></span>
+      <span id="status-text">Wave Running</span>
+    </div>
+  </header>
+
+  <!-- CARD 1: Traveling Light Wave -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <span>💫</span> Traveling Light Wave
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="waveEnabled">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Mini Visual Preview -->
+    <div class="preview-wrapper">
+      <div class="laptop-bezel">
+        <div class="screen-reflection"></div>
+        <canvas id="previewCanvas" width="240" height="135"></canvas>
+        <div class="preview-badge" id="previewBadge">↻ CW 1.0x</div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+
+    <!-- Direction Selector -->
+    <div class="dir-group">
+      <button type="button" class="dir-btn" id="btn-cw" title="Circulate Clockwise">
+        <span class="icon">↻</span>
+        <span>Clockwise</span>
+      </button>
+      <button type="button" class="dir-btn" id="btn-ccw" title="Circulate Anticlockwise">
+        <span class="icon">↺</span>
+        <span>Anticlockwise</span>
+      </button>
+      <button type="button" class="dir-btn reverse" id="btn-reverse" title="Reverse Current Direction Immediately">
+        <span class="icon">⇄</span>
+        <span>Reverse</span>
+      </button>
+    </div>
+
+    <!-- Motion Controls -->
+    <div class="row">
+      <label>Animation Speed</label>
+      <input type="range" id="waveSpeed" min="0.2" max="3.0" step="0.05">
+      <span class="val-badge" id="waveSpeedVal">1.0x</span>
+    </div>
+
+    <div class="row">
+      <label>Wave & Trail Length</label>
+      <input type="range" id="waveLength" min="0.10" max="0.80" step="0.02">
+      <span class="val-badge" id="waveLengthVal">35%</span>
+    </div>
+
+    <div class="row">
+      <label>Glow Intensity</label>
+      <input type="range" id="waveGlow" min="0.2" max="2.0" step="0.05">
+      <span class="val-badge" id="waveGlowVal">100%</span>
+    </div>
+
+    <div class="row">
+      <label>Border Thickness</label>
+      <input type="range" id="waveThickness" min="4" max="50" step="1">
+      <span class="val-badge" id="waveThicknessVal">18px</span>
+    </div>
+
+    <div class="row">
+      <label>Wave Color Style</label>
+      <select id="waveColorMode">
+        <option value="rainbow">🌈 RGB Rainbow Spectrum</option>
+        <option value="gradient">🎨 Dual Gradient (Color 1 → 2)</option>
+        <option value="head-trail">✨ Luminous Head + Trail</option>
+        <option value="solid">💡 Solid Neon Hue</option>
+        <option value="sync">🎵 Sync with Audio Colors</option>
+      </select>
+    </div>
+
+    <div class="row" id="row-wave-head">
+      <label>Wave Head Color</label>
+      <div class="color-picker-wrap">
+        <input type="color" id="waveHeadColor">
+      </div>
+    </div>
+
+    <div class="row" id="row-wave-c1">
+      <label id="label-wave-c1">Wave Color 1</label>
+      <div class="color-picker-wrap">
+        <input type="color" id="waveColor1">
+      </div>
+    </div>
+
+    <div class="row" id="row-wave-c2">
+      <label id="label-wave-c2">Wave Color 2</label>
+      <div class="color-picker-wrap">
+        <input type="color" id="waveColor2">
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: Quick Presets -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom: 12px;">
+      <span>🎨</span> Theme Presets
+    </div>
+    <div class="presets" id="presets"></div>
+  </div>
+
+  <!-- CARD 3: Audio Reactive Vibe -->
+  <div class="card">
+    <div class="card-header collapsible-header" id="audio-header">
+      <div class="card-title">
+        <span>🎵</span> Audio Edge Visualizer
+      </div>
+      <span class="collapse-arrow">▼</span>
+    </div>
+
+    <div class="collapsible-body" id="audio-body">
+      <div class="row">
+        <label>Visualizer Style</label>
+        <select id="mode">
+          <option value="bars">Bars</option>
+          <option value="wave">Wave</option>
+          <option value="glow">Glow</option>
+          <option value="pulse">Pulse (Bass)</option>
+          <option value="none">Off (Light Wave Only)</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>Audio Color 1</label>
+        <input type="color" id="color1">
+      </div>
+
+      <div class="row">
+        <label>Audio Color 2</label>
+        <input type="color" id="color2">
+      </div>
+
+      <div class="row">
+        <label>Audio Rainbow Mode</label>
+        <input type="checkbox" id="rainbow" style="accent-color: #00f5ff; width: 18px; height: 18px;">
+      </div>
+
+      <div class="row">
+        <label>Audio Sensitivity</label>
+        <input type="range" id="sensitivity" min="0.3" max="3" step="0.05">
+        <span class="val-badge" id="sensitivityVal">1.3</span>
+      </div>
+
+      <div class="row">
+        <label>Audio Height / Size</label>
+        <input type="range" id="thickness" min="40" max="400" step="5">
+        <span class="val-badge" id="thicknessVal">140px</span>
+      </div>
+
+      <div class="row">
+        <label>Audio Smoothness</label>
+        <input type="range" id="smoothing" min="0.2" max="0.92" step="0.01">
+        <span class="val-badge" id="smoothingVal">0.70</span>
+      </div>
+
+      <div style="margin-top: 14px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">
+        Active Audio Edges
+      </div>
+      <div class="edges-grid">
+        <label class="edge-checkbox"><input type="checkbox" id="edge-top"> Top Edge</label>
+        <label class="edge-checkbox"><input type="checkbox" id="edge-bottom"> Bottom Edge</label>
+        <label class="edge-checkbox"><input type="checkbox" id="edge-left"> Left Edge</label>
+        <label class="edge-checkbox"><input type="checkbox" id="edge-right"> Right Edge</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: Displays & System -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom: 12px;">
+      <span>🖥️</span> Displays & System
+    </div>
+    <div class="row">
+      <label>Display Target</label>
+      <select id="displayMode">
+        <option value="all">All Connected Displays</option>
+        <option value="primary">Primary Display Only</option>
+      </select>
+    </div>
+    <div class="row">
+      <label>Start with Windows (Auto-launch)</label>
+      <label class="switch">
+        <input type="checkbox" id="autoStart">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+<script src="panel.js"></script>
+</body>
+</html>

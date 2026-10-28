@@ -1,0 +1,51 @@
+{
+  "name": "screen-vibes",
+  "version": "1.0.0",
+  "description": "Screen edges that vibe with your system audio and continuous ambient light wave",
+  "main": "main.js",
+  "author": "sachinjatavat",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.sachinjatavat.screenvibes",
+    "productName": "Screen Vibes",
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Screen Vibes"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.exe"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "overlay.html",
+      "overlay.js",
+      "panel.html",
+      "panel.js",
+      "icon.png",
+      "icon.ico",
+      "package.json"
+    ]
+  }
+}
