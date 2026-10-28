@@ -2,295 +2,377 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Screen Vibes Settings</title>
+<title>Screen Vibes - Developed By Sachin</title>
 <style>
   :root {
-    --bg: #12121a;
-    --card-bg: #1a1a27;
-    --card-border: rgba(255, 255, 255, 0.08);
+    --bg: #151522;
+    --card-bg: #1e1e2f;
+    --card-shadow: 8px 14px 28px rgba(0, 0, 0, 0.45), inset 2px 2px 4px rgba(255, 255, 255, 0.08), inset -3px -3px 6px rgba(0, 0, 0, 0.5);
+    --btn-clay: 5px 8px 16px rgba(0, 0, 0, 0.38), inset 2px 2px 3px rgba(255, 255, 255, 0.12), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
+    --btn-pressed: 2px 3px 6px rgba(0, 0, 0, 0.4), inset 3px 3px 6px rgba(0, 0, 0, 0.6), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.08);
+    --groove-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.75), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.05);
+    --thumb-clay: 3px 5px 12px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 160, 200, 0.5);
+    
     --accent: #00f5ff;
     --accent2: #ff00e5;
-    --text-primary: #f0f0f8;
-    --text-muted: #8c8ca6;
-    --track-bg: #272738;
+    --text-primary: #f2f2fa;
+    --text-muted: #9595b2;
+    --groove-bg: #13131e;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    padding: 18px 20px 28px;
+    padding: 20px 22px 32px;
     background: var(--bg);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     user-select: none;
     overflow-x: hidden;
   }
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 7px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: #2f2f44; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #40405e; }
+  ::-webkit-scrollbar-thumb {
+    background: #2c2c42;
+    border-radius: 10px;
+    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #3c3c58; }
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--card-border);
-  }
-  .title-group h1 {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 3px;
-    background: linear-gradient(135deg, #00f5ff 0%, #ff00e5 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
-  }
-  .title-group .sub {
-    color: var(--text-muted);
-    font-size: 12px;
-    margin: 0;
-  }
-  .status-pill {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 12px;
-    background: rgba(0, 245, 255, 0.12);
-    color: #00f5ff;
-    border: 1px solid rgba(0, 245, 255, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #00f5ff;
-    box-shadow: 0 0 8px #00f5ff;
-  }
-
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  }
-  .card-header {
+  /* Top Developer Badge & Header */
+  .top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
   }
-  .card-title {
-    font-size: 13px;
+  .dev-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #252538;
+    color: #00f5ff;
+    font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: .08em;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 245, 255, 0.25);
+    box-shadow: var(--btn-clay);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .dev-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 6px 10px 20px rgba(0, 0, 0, 0.4), inset 2px 2px 3px rgba(255, 255, 255, 0.15), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
+  }
+  .dev-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00f5ff;
+    box-shadow: 0 0 8px #00f5ff;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 16px 20px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .title-group h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 0 4px;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #00f5ff 0%, #ff00e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .title-group .sub {
     color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .title-group .author {
+    color: #00f5ff;
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+  }
+  .status-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 16px;
+    background: #252538;
+    color: #00f5ff;
+    box-shadow: var(--btn-clay);
+    border: 1px solid rgba(0, 245, 255, 0.2);
     display: flex;
     align-items: center;
     gap: 7px;
   }
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00f5ff;
+    box-shadow: 0 0 8px #00f5ff;
+  }
 
-  /* Live Preview Section */
+  /* Claymorphism Cards */
+  .card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #cfcfe2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Clay Laptop Preview */
   .preview-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px 0 16px;
+    margin: 12px 0 18px;
   }
   .laptop-bezel {
     position: relative;
-    background: #09090e;
-    border: 3px solid #303046;
-    border-radius: 9px;
-    padding: 4px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 245, 255, 0.12);
+    background: #11111a;
+    border: 4px solid #2a2a3e;
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), inset 2px 2px 4px rgba(255, 255, 255, 0.08), inset -3px -3px 5px rgba(0, 0, 0, 0.6);
   }
   .screen-reflection {
     position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    height: 38px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 100%);
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 42px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   #previewCanvas {
     display: block;
-    background: #07070b;
-    border-radius: 5px;
+    background: #08080d;
+    border-radius: 8px;
   }
   .preview-badge {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background: rgba(0, 0, 0, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 2px 7px;
-    border-radius: 4px;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(18, 18, 28, 0.85);
+    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3px 9px;
+    border-radius: 8px;
     font-size: 10px;
-    color: #a0a0c0;
+    color: #a0a0c4;
     letter-spacing: 0.05em;
-    font-weight: 600;
+    font-weight: 700;
   }
   .laptop-base {
-    width: 250px;
-    height: 6px;
-    background: #232334;
-    border-radius: 0 0 8px 8px;
+    width: 260px;
+    height: 8px;
+    background: #28283e;
+    border-radius: 0 0 10px 10px;
     margin: 0 auto;
-    border-top: 1px solid #383850;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.1);
+    border-top: 1px solid #3d3d58;
   }
 
-  /* Direction Button Group */
+  /* Clay Direction Buttons */
   .dir-group {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 14px;
+    gap: 10px;
+    margin-bottom: 16px;
   }
   .dir-btn {
-    background: #232335;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #27273c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     color: var(--text-primary);
-    padding: 10px 8px;
-    border-radius: 10px;
+    padding: 12px 10px;
+    border-radius: 16px;
     cursor: pointer;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    transition: all 0.2s ease;
+    gap: 5px;
+    box-shadow: var(--btn-clay);
+    transition: all 0.18s ease;
   }
   .dir-btn .icon {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1;
   }
   .dir-btn:hover {
-    background: #2d2d44;
-    border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
+    background: #2f2f48;
+    transform: translateY(-2px);
+    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.4), inset 2px 2px 3px rgba(255, 255, 255, 0.18), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
+  }
+  .dir-btn:active {
+    transform: translateY(1px);
+    box-shadow: var(--btn-pressed);
   }
   .dir-btn.active {
-    background: linear-gradient(135deg, rgba(0, 245, 255, 0.2) 0%, rgba(255, 0, 229, 0.2) 100%);
-    border-color: #00f5ff;
-    box-shadow: 0 0 14px rgba(0, 245, 255, 0.35);
+    background: linear-gradient(145deg, #183e4a 0%, #3e1d44 100%);
+    border-color: rgba(0, 245, 255, 0.5);
     color: #fff;
-  }
-  .dir-btn.reverse:active {
-    transform: scale(0.96);
+    box-shadow: 0 0 16px rgba(0, 245, 255, 0.3), inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -2px -2px 4px rgba(0, 245, 255, 0.25);
   }
 
-  /* Form Rows */
+  /* Rows */
   .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 13px;
   }
   .row label {
-    color: #cfcfe2;
+    color: #d8d8ea;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
   }
   .val-badge {
     color: #00f5ff;
     font-size: 12px;
-    font-weight: 600;
-    min-width: 44px;
+    font-weight: 700;
+    min-width: 48px;
     text-align: right;
     font-variant-numeric: tabular-nums;
+    background: #171724;
+    padding: 3px 8px;
+    border-radius: 8px;
+    box-shadow: var(--groove-shadow);
   }
 
-  /* Range sliders */
+  /* Clay Sliders */
   input[type=range] {
     -webkit-appearance: none;
     appearance: none;
     width: 170px;
-    height: 6px;
-    background: var(--track-bg);
-    border-radius: 4px;
+    height: 10px;
+    background: var(--groove-bg);
+    border-radius: 10px;
     outline: none;
-    transition: background 0.2s;
+    box-shadow: var(--groove-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.04);
   }
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: #00f5ff;
     cursor: pointer;
-    box-shadow: 0 0 8px rgba(0, 245, 255, 0.7);
+    box-shadow: var(--thumb-clay);
     transition: transform 0.15s, background 0.15s;
+    border: none;
   }
   input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-    background: #fff;
+    transform: scale(1.15);
+    background: #4df9ff;
   }
 
-  /* Toggle switch */
+  /* Clay Toggle Switch */
   .switch {
     position: relative;
     display: inline-block;
-    width: 44px;
-    height: 24px;
+    width: 48px;
+    height: 26px;
   }
   .switch input { opacity: 0; width: 0; height: 0; }
   .slider {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: var(--track-bg);
-    transition: .3s;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: var(--groove-bg);
+    transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 26px;
+    box-shadow: var(--groove-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
   .slider:before {
     position: absolute;
     content: "";
-    height: 16px;
-    width: 16px;
-    left: 3px;
-    bottom: 3px;
-    background-color: #8b8ba0;
-    transition: .3s;
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3.5px;
+    background: #7a7a96;
+    transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.4), inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.3);
   }
   input:checked + .slider {
-    background-color: rgba(0, 245, 255, 0.3);
-    border-color: #00f5ff;
+    background-color: #123440;
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.7), inset -1px -1px 2px rgba(0, 245, 255, 0.2);
   }
   input:checked + .slider:before {
-    transform: translateX(20px);
-    background-color: #00f5ff;
-    box-shadow: 0 0 10px #00f5ff;
+    transform: translateX(22px);
+    background: #00f5ff;
+    box-shadow: 0 0 10px #00f5ff, inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 160, 200, 0.6);
   }
 
-  /* Inputs & Select */
+  /* Clay Select Dropdowns */
   select {
-    background: #252538;
+    background: #25253a;
     color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 6px 12px;
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 7px 14px;
+    border-radius: 12px;
     font-size: 13px;
+    font-weight: 600;
     outline: none;
     cursor: pointer;
+    box-shadow: var(--btn-clay);
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  select:focus { border-color: #00f5ff; }
+  select:hover {
+    transform: translateY(-1px);
+    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.35);
+  }
+  select:focus {
+    border-color: #00f5ff;
+  }
 
   .color-picker-wrap {
     display: flex;
@@ -300,43 +382,51 @@
   input[type=color] {
     -webkit-appearance: none;
     appearance: none;
-    width: 36px;
-    height: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
+    width: 40px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
     background: none;
     padding: 0;
     cursor: pointer;
     overflow: hidden;
+    box-shadow: var(--btn-clay);
+    transition: transform 0.15s;
   }
+  input[type=color]:hover { transform: scale(1.06); }
   input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
-  input[type=color]::-webkit-color-swatch { border: none; border-radius: 5px; }
+  input[type=color]::-webkit-color-swatch { border: none; border-radius: 9px; }
 
-  /* Presets */
+  /* Clay Presets */
   .presets {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 10px;
   }
   .preset {
-    height: 38px;
-    border-radius: 9px;
+    height: 42px;
+    border-radius: 14px;
     border: 2px solid transparent;
     cursor: pointer;
     color: #fff;
     font-size: 11px;
-    font-weight: 700;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    font-weight: 800;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.45), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s;
     outline: none;
   }
   .preset:hover {
     border-color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.5), inset 2px 2px 4px rgba(255, 255, 255, 0.35), inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+  }
+  .preset:active {
+    transform: translateY(1px);
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4), inset 3px 3px 6px rgba(0, 0, 0, 0.5);
   }
 
-  /* Edges grid */
+  /* Clay Checkbox Grid */
   .edges-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -346,16 +436,26 @@
   .edge-checkbox {
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: #232335;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 9px;
+    background: #25253a;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     cursor: pointer;
-    transition: background 0.15s;
+    box-shadow: var(--btn-clay);
+    font-weight: 600;
+    transition: transform 0.15s, background 0.15s;
   }
-  .edge-checkbox:hover { background: #2c2c42; }
-  .edge-checkbox input { cursor: pointer; accent-color: #00f5ff; }
+  .edge-checkbox:hover {
+    transform: translateY(-1px);
+    background: #2d2d44;
+  }
+  .edge-checkbox input {
+    cursor: pointer;
+    accent-color: #00f5ff;
+    width: 16px;
+    height: 16px;
+  }
 
   .collapsible-header {
     cursor: pointer;
@@ -365,7 +465,7 @@
   }
   .collapse-arrow {
     transition: transform 0.2s ease;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
   }
   .collapsed .collapse-arrow { transform: rotate(-90deg); }
@@ -374,14 +474,23 @@
 </head>
 <body>
 
-  <header>
-    <div class="title-group">
-      <h1>✨ Screen Vibes</h1>
-      <div class="sub">Continuous Traveling Light Wave & Ambient RGB Edge Visualizer</div>
+  <!-- Top Developer Credit Bar -->
+  <div class="top-bar">
+    <div class="dev-pill">
+      <span class="dev-dot"></span>
+      <span>- Developed By Sachin</span>
     </div>
     <div class="status-pill" id="status-pill">
       <span class="status-dot"></span>
       <span id="status-text">Wave Running</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="title-group">
+      <h1>✨ Screen Vibes</h1>
+      <div class="sub">Continuous Traveling Light Wave & Ambient RGB Edge Visualizer</div>
+      <div class="author">⚡ Developed By Sachin</div>
     </div>
   </header>
 
@@ -483,7 +592,7 @@
 
   <!-- CARD 2: Quick Presets -->
   <div class="card">
-    <div class="card-title" style="margin-bottom: 12px;">
+    <div class="card-title" style="margin-bottom: 14px;">
       <span>🎨</span> Theme Presets
     </div>
     <div class="presets" id="presets"></div>
@@ -528,7 +637,7 @@
       <div class="row">
         <label>Audio Sensitivity</label>
         <input type="range" id="sensitivity" min="0.3" max="3" step="0.05">
-        <span class="val-badge" id="sensitivityVal">1.3</span>
+        <span class="val-badge" id="sensitivityVal">1.30</span>
       </div>
 
       <div class="row">
@@ -543,7 +652,7 @@
         <span class="val-badge" id="smoothingVal">0.70</span>
       </div>
 
-      <div style="margin-top: 14px; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">
+      <div style="margin-top: 16px; margin-bottom: 10px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.06em;">
         Active Audio Edges
       </div>
       <div class="edges-grid">
@@ -557,7 +666,7 @@
 
   <!-- CARD 4: Displays & System -->
   <div class="card">
-    <div class="card-title" style="margin-bottom: 12px;">
+    <div class="card-title" style="margin-bottom: 14px;">
       <span>🖥️</span> Displays & System
     </div>
     <div class="row">
