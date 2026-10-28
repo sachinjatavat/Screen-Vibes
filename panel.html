@@ -5,139 +5,148 @@
 <title>Screen Vibes - Developed By Sachin</title>
 <style>
   :root {
-    --bg: #151522;
-    --card-bg: #1e1e2f;
-    --card-shadow: 8px 14px 28px rgba(0, 0, 0, 0.45), inset 2px 2px 4px rgba(255, 255, 255, 0.08), inset -3px -3px 6px rgba(0, 0, 0, 0.5);
-    --btn-clay: 5px 8px 16px rgba(0, 0, 0, 0.38), inset 2px 2px 3px rgba(255, 255, 255, 0.12), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
-    --btn-pressed: 2px 3px 6px rgba(0, 0, 0, 0.4), inset 3px 3px 6px rgba(0, 0, 0, 0.6), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.08);
-    --groove-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.75), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.05);
-    --thumb-clay: 3px 5px 12px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 160, 200, 0.5);
+    --clay-bg: #1c1c2b;
+    --card-clay: #26263b;
+    --card-shadow: 12px 18px 30px rgba(0, 0, 0, 0.45), -4px -4px 10px rgba(255, 255, 255, 0.05), inset 3px 3px 6px rgba(255, 255, 255, 0.12), inset -4px -4px 8px rgba(0, 0, 0, 0.5);
     
+    --btn-clay: 6px 9px 18px rgba(0, 0, 0, 0.4), -2px -2px 6px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.16), inset -3px -3px 6px rgba(0, 0, 0, 0.45);
+    --btn-hover: 8px 12px 22px rgba(0, 0, 0, 0.48), -3px -3px 8px rgba(255, 255, 255, 0.12), inset 2px 2px 5px rgba(255, 255, 255, 0.22), inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+    --btn-active: inset 4px 4px 8px rgba(0, 0, 0, 0.65), inset -2px -2px 4px rgba(255, 255, 255, 0.06), 2px 3px 6px rgba(0, 0, 0, 0.35);
+    
+    --groove-clay: inset 4px 4px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 4px rgba(255, 255, 255, 0.05);
+    --thumb-clay: 4px 6px 14px rgba(0, 0, 0, 0.45), 0 0 10px rgba(0, 245, 255, 0.4), inset 2px 2px 4px #ffffff, inset -3px -3px 5px rgba(0, 140, 180, 0.7);
+
     --accent: #00f5ff;
-    --accent2: #ff00e5;
+    --accent-pink: #ff00d4;
     --text-primary: #f2f2fa;
-    --text-muted: #9595b2;
-    --groove-bg: #13131e;
+    --text-muted: #9a9ab8;
   }
+  
   * { box-sizing: border-box; }
+  
   body {
     margin: 0;
-    padding: 20px 22px 32px;
-    background: var(--bg);
+    padding: 16px 18px 30px;
+    background: var(--clay-bg);
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     user-select: none;
     overflow-x: hidden;
   }
-  ::-webkit-scrollbar { width: 7px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
+  
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--clay-bg); }
   ::-webkit-scrollbar-thumb {
-    background: #2c2c42;
-    border-radius: 10px;
+    background: #33334d;
+    border-radius: 12px;
     box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1);
   }
-  ::-webkit-scrollbar-thumb:hover { background: #3c3c58; }
+  ::-webkit-scrollbar-thumb:hover { background: #444466; }
 
-  /* Top Developer Badge & Header */
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .dev-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: #252538;
-    color: #00f5ff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 245, 255, 0.25);
-    box-shadow: var(--btn-clay);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .dev-pill:hover {
-    transform: translateY(-1px);
-    box-shadow: 6px 10px 20px rgba(0, 0, 0, 0.4), inset 2px 2px 3px rgba(255, 255, 255, 0.15), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
-  }
-  .dev-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #00f5ff;
-    box-shadow: 0 0 8px #00f5ff;
-  }
-
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-    padding: 16px 20px;
-    background: var(--card-bg);
-    border-radius: 24px;
+  /* ========================================= */
+  /* PROMINENT TOP DEVELOPER HEADER CARD       */
+  /* ========================================= */
+  .developer-header-card {
+    background: #2b2b42;
+    border-radius: 26px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
     box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
   }
-  .title-group h1 {
+  .brand-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .app-clay-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #00d2df 0%, #d800c2 100%);
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 22px;
+  }
+  .brand-text h1 {
+    font-size: 20px;
     font-weight: 800;
-    margin: 0 0 4px;
-    letter-spacing: -0.02em;
+    margin: 0 0 3px;
+    letter-spacing: -0.01em;
     background: linear-gradient(135deg, #00f5ff 0%, #ff00e5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .title-group .sub {
+  .brand-text .app-sub {
+    font-size: 11px;
+    font-weight: 600;
     color: var(--text-muted);
-    font-size: 12px;
-    font-weight: 500;
     margin: 0;
   }
-  .title-group .author {
-    color: #00f5ff;
-    font-weight: 600;
-    font-size: 12px;
+  .dev-badge-wrap {
     display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 3px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
   }
-  .status-pill {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 7px 14px;
-    border-radius: 16px;
-    background: #252538;
+  .dev-name-pill {
+    background: #363650;
     color: #00f5ff;
+    padding: 7px 15px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     box-shadow: var(--btn-clay);
-    border: 1px solid rgba(0, 245, 255, 0.2);
-    display: flex;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    display: inline-flex;
     align-items: center;
     gap: 7px;
   }
-  .status-dot {
+  .dev-name-pill .dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
     background: #00f5ff;
     box-shadow: 0 0 8px #00f5ff;
   }
+  .status-pill {
+    background: #1c1c2b;
+    box-shadow: var(--groove-clay);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #8c8cb0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .status-pill .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00f5ff;
+    box-shadow: 0 0 6px #00f5ff;
+  }
 
-  /* Claymorphism Cards */
+  /* ========================================= */
+  /* CLAYMORPHISM CARDS                        */
+  /* ========================================= */
   .card {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 18px 20px;
+    background: var(--card-clay);
+    border-radius: 28px;
+    padding: 20px;
     margin-bottom: 16px;
     box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
   .card-header {
     display: flex;
@@ -150,13 +159,15 @@
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: .08em;
-    color: #cfcfe2;
+    color: #d2d2ea;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  /* Clay Laptop Preview */
+  /* ========================================= */
+  /* CLAY LAPTOP PREVIEW CHASSIS               */
+  /* ========================================= */
   .preview-wrapper {
     display: flex;
     flex-direction: column;
@@ -166,10 +177,10 @@
   .laptop-bezel {
     position: relative;
     background: #11111a;
-    border: 4px solid #2a2a3e;
-    border-radius: 14px;
+    border: 5px solid #34344d;
+    border-radius: 16px;
     padding: 6px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), inset 2px 2px 4px rgba(255, 255, 255, 0.08), inset -3px -3px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 8px 12px 24px rgba(0, 0, 0, 0.6), inset 2px 2px 4px rgba(255, 255, 255, 0.1), inset -3px -3px 5px rgba(0, 0, 0, 0.7);
   }
   .screen-reflection {
     position: absolute;
@@ -179,23 +190,23 @@
     height: 42px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
   #previewCanvas {
     display: block;
     background: #08080d;
-    border-radius: 8px;
+    border-radius: 10px;
   }
   .preview-badge {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background: rgba(18, 18, 28, 0.85);
-    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.4);
+    background: rgba(18, 18, 28, 0.88);
+    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 3px 9px;
-    border-radius: 8px;
+    padding: 3px 10px;
+    border-radius: 10px;
     font-size: 10px;
     color: #a0a0c4;
     letter-spacing: 0.05em;
@@ -204,26 +215,28 @@
   .laptop-base {
     width: 260px;
     height: 8px;
-    background: #28283e;
-    border-radius: 0 0 10px 10px;
+    background: #34344d;
+    border-radius: 0 0 12px 12px;
     margin: 0 auto;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.1);
-    border-top: 1px solid #3d3d58;
+    border-top: 1px solid #444464;
   }
 
-  /* Clay Direction Buttons */
+  /* ========================================= */
+  /* CLAY DIRECTION BUTTONS                    */
+  /* ========================================= */
   .dir-group {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
   .dir-btn {
-    background: #27273c;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #323249;
+    border: 1px solid rgba(255, 255, 255, 0.07);
     color: var(--text-primary);
-    padding: 12px 10px;
-    border-radius: 16px;
+    padding: 13px 10px;
+    border-radius: 18px;
     cursor: pointer;
     font-size: 12px;
     font-weight: 700;
@@ -232,39 +245,41 @@
     align-items: center;
     gap: 5px;
     box-shadow: var(--btn-clay);
-    transition: all 0.18s ease;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .dir-btn .icon {
     font-size: 20px;
     line-height: 1;
   }
   .dir-btn:hover {
-    background: #2f2f48;
+    background: #3c3c58;
     transform: translateY(-2px);
-    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.4), inset 2px 2px 3px rgba(255, 255, 255, 0.18), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--btn-hover);
   }
   .dir-btn:active {
-    transform: translateY(1px);
-    box-shadow: var(--btn-pressed);
+    transform: translateY(2px);
+    box-shadow: var(--btn-active);
   }
   .dir-btn.active {
-    background: linear-gradient(145deg, #183e4a 0%, #3e1d44 100%);
-    border-color: rgba(0, 245, 255, 0.5);
-    color: #fff;
-    box-shadow: 0 0 16px rgba(0, 245, 255, 0.3), inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -2px -2px 4px rgba(0, 245, 255, 0.25);
+    background: linear-gradient(135deg, #00d2df 0%, #d800c2 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 245, 255, 0.45), inset 3px 3px 6px rgba(255, 255, 255, 0.4), inset -3px -3px 6px rgba(0, 0, 0, 0.4);
   }
 
-  /* Rows */
+  /* ========================================= */
+  /* CLAY CONTROLS & SLIDERS                   */
+  /* ========================================= */
   .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin: 12px 0;
+    margin: 14px 0;
     font-size: 13px;
   }
   .row label {
-    color: #d8d8ea;
+    color: #d6d6ec;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -273,14 +288,15 @@
   .val-badge {
     color: #00f5ff;
     font-size: 12px;
-    font-weight: 700;
-    min-width: 48px;
+    font-weight: 800;
+    min-width: 50px;
     text-align: right;
     font-variant-numeric: tabular-nums;
     background: #171724;
-    padding: 3px 8px;
-    border-radius: 8px;
-    box-shadow: var(--groove-shadow);
+    padding: 4px 10px;
+    border-radius: 12px;
+    box-shadow: var(--groove-clay);
+    border: 1px solid rgba(255, 255, 255, 0.04);
   }
 
   /* Clay Sliders */
@@ -288,18 +304,18 @@
     -webkit-appearance: none;
     appearance: none;
     width: 170px;
-    height: 10px;
-    background: var(--groove-bg);
-    border-radius: 10px;
+    height: 12px;
+    background: #161623;
+    border-radius: 12px;
     outline: none;
-    box-shadow: var(--groove-shadow);
+    box-shadow: var(--groove-clay);
     border: 1px solid rgba(255, 255, 255, 0.04);
   }
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: #00f5ff;
     cursor: pointer;
@@ -309,58 +325,58 @@
   }
   input[type=range]::-webkit-slider-thumb:hover {
     transform: scale(1.15);
-    background: #4df9ff;
+    background: #52f8ff;
   }
 
   /* Clay Toggle Switch */
   .switch {
     position: relative;
     display: inline-block;
-    width: 48px;
-    height: 26px;
+    width: 54px;
+    height: 30px;
   }
   .switch input { opacity: 0; width: 0; height: 0; }
   .slider {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: var(--groove-bg);
+    background-color: #171725;
     transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 26px;
-    box-shadow: var(--groove-shadow);
+    border-radius: 30px;
+    box-shadow: var(--groove-clay);
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
   .slider:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
+    height: 22px;
+    width: 22px;
     left: 4px;
     bottom: 3.5px;
-    background: #7a7a96;
+    background: #9090af;
     transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
-    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.4), inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.45), inset 2px 2px 3px rgba(255, 255, 255, 0.4), inset -2px -2px 3px rgba(0, 0, 0, 0.4);
   }
   input:checked + .slider {
-    background-color: #123440;
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.7), inset -1px -1px 2px rgba(0, 245, 255, 0.2);
+    background-color: #133a46;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.75), inset -1.5px -1.5px 3px rgba(0, 245, 255, 0.25);
   }
   input:checked + .slider:before {
-    transform: translateX(22px);
+    transform: translateX(24px);
     background: #00f5ff;
-    box-shadow: 0 0 10px #00f5ff, inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 160, 200, 0.6);
+    box-shadow: 0 0 12px #00f5ff, inset 2px 2px 4px #ffffff, inset -2px -2px 4px rgba(0, 160, 200, 0.6);
   }
 
   /* Clay Select Dropdowns */
   select {
-    background: #25253a;
+    background: #323249;
     color: var(--text-primary);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 7px 14px;
-    border-radius: 12px;
+    padding: 8px 16px;
+    border-radius: 14px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     outline: none;
     cursor: pointer;
     box-shadow: var(--btn-clay);
@@ -368,7 +384,7 @@
   }
   select:hover {
     transform: translateY(-1px);
-    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--btn-hover);
   }
   select:focus {
     border-color: #00f5ff;
@@ -382,10 +398,10 @@
   input[type=color] {
     -webkit-appearance: none;
     appearance: none;
-    width: 40px;
-    height: 30px;
+    width: 44px;
+    height: 32px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
+    border-radius: 12px;
     background: none;
     padding: 0;
     cursor: pointer;
@@ -393,40 +409,44 @@
     box-shadow: var(--btn-clay);
     transition: transform 0.15s;
   }
-  input[type=color]:hover { transform: scale(1.06); }
+  input[type=color]:hover { transform: scale(1.08); }
   input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
-  input[type=color]::-webkit-color-swatch { border: none; border-radius: 9px; }
+  input[type=color]::-webkit-color-swatch { border: none; border-radius: 10px; }
 
-  /* Clay Presets */
+  /* ========================================= */
+  /* CLAY PRESET BUTTONS                       */
+  /* ========================================= */
   .presets {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
   .preset {
-    height: 42px;
-    border-radius: 14px;
+    height: 44px;
+    border-radius: 16px;
     border: 2px solid transparent;
     cursor: pointer;
     color: #fff;
     font-size: 11px;
     font-weight: 800;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
-    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.45), inset 2px 2px 3px rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
+    box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.45), inset 2px 2px 4px rgba(255, 255, 255, 0.3), inset -2px -2px 4px rgba(0, 0, 0, 0.45);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s;
     outline: none;
   }
   .preset:hover {
-    border-color: #fff;
+    border-color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.5), inset 2px 2px 4px rgba(255, 255, 255, 0.35), inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 6px 10px 18px rgba(0, 0, 0, 0.55), inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -2px -2px 4px rgba(0, 0, 0, 0.4);
   }
   .preset:active {
     transform: translateY(1px);
-    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.4), inset 3px 3px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.6);
   }
 
-  /* Clay Checkbox Grid */
+  /* ========================================= */
+  /* CLAY CHECKBOXES                           */
+  /* ========================================= */
   .edges-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -436,25 +456,25 @@
   .edge-checkbox {
     display: flex;
     align-items: center;
-    gap: 9px;
-    background: #25253a;
-    padding: 10px 14px;
-    border-radius: 14px;
+    gap: 10px;
+    background: #323249;
+    padding: 11px 15px;
+    border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.06);
     cursor: pointer;
     box-shadow: var(--btn-clay);
-    font-weight: 600;
+    font-weight: 700;
     transition: transform 0.15s, background 0.15s;
   }
   .edge-checkbox:hover {
     transform: translateY(-1px);
-    background: #2d2d44;
+    background: #3a3a55;
   }
   .edge-checkbox input {
     cursor: pointer;
     accent-color: #00f5ff;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   .collapsible-header {
@@ -474,25 +494,28 @@
 </head>
 <body>
 
-  <!-- Top Developer Credit Bar -->
-  <div class="top-bar">
-    <div class="dev-pill">
-      <span class="dev-dot"></span>
-      <span>- Developed By Sachin</span>
+  <!-- ========================================= -->
+  <!-- UNMISSABLE CLAYMORPHIC TOP HEADER         -->
+  <!-- ========================================= -->
+  <div class="developer-header-card">
+    <div class="brand-left">
+      <div class="app-clay-icon">✨</div>
+      <div class="brand-text">
+        <h1>Screen Vibes</h1>
+        <p class="app-sub">Ambient RGB Edges & Music Visualizer</p>
+      </div>
     </div>
-    <div class="status-pill" id="status-pill">
-      <span class="status-dot"></span>
-      <span id="status-text">Wave Running</span>
+    <div class="dev-badge-wrap">
+      <div class="dev-name-pill">
+        <span class="dot"></span>
+        <span>- Developed By Sachin</span>
+      </div>
+      <div class="status-pill" id="status-pill">
+        <span class="status-dot"></span>
+        <span id="status-text">Wave Running</span>
+      </div>
     </div>
   </div>
-
-  <header>
-    <div class="title-group">
-      <h1>✨ Screen Vibes</h1>
-      <div class="sub">Continuous Traveling Light Wave & Ambient RGB Edge Visualizer</div>
-      <div class="author">⚡ Developed By Sachin</div>
-    </div>
-  </header>
 
   <!-- CARD 1: Traveling Light Wave -->
   <div class="card">
@@ -516,19 +539,19 @@
       <div class="laptop-base"></div>
     </div>
 
-    <!-- Direction Selector -->
+    <!-- Direction Selector (Clockwise, Anticlockwise, Dual Waves) -->
     <div class="dir-group">
-      <button type="button" class="dir-btn" id="btn-cw" title="Circulate Clockwise">
+      <button type="button" class="dir-btn" id="btn-cw" title="Single Light Wave Clockwise">
         <span class="icon">↻</span>
         <span>Clockwise</span>
       </button>
-      <button type="button" class="dir-btn" id="btn-ccw" title="Circulate Anticlockwise">
+      <button type="button" class="dir-btn" id="btn-ccw" title="Single Light Wave Anticlockwise">
         <span class="icon">↺</span>
         <span>Anticlockwise</span>
       </button>
-      <button type="button" class="dir-btn reverse" id="btn-reverse" title="Reverse Current Direction Immediately">
+      <button type="button" class="dir-btn" id="btn-dual" title="Two Light Waves Moving In Opposite Directions Intersecting and Crossing">
         <span class="icon">⇄</span>
-        <span>Reverse</span>
+        <span>Dual Waves</span>
       </button>
     </div>
 

@@ -152,15 +152,15 @@ function createPanel(shouldShow = true) {
   }
 
   panel = new BrowserWindow({
-    width: 490,
-    height: 820,
-    minWidth: 420,
+    width: 520,
+    height: 880,
+    minWidth: 440,
     minHeight: 650,
     resizable: true,
     show: shouldShow,
     autoHideMenuBar: true,
-    title: 'Screen Vibes - Ambient Edge Light',
-    backgroundColor: '#12121a',
+    title: 'Screen Vibes - Developed By Sachin',
+    backgroundColor: '#1c1c2b',
     icon: path.join(__dirname, 'icon.png'),
     webPreferences: { preload: path.join(__dirname, 'preload.js') },
   });
@@ -186,8 +186,13 @@ function toggleOverlays() {
 
 function updateTrayMenu() {
   if (!tray || tray.isDestroyed()) return;
+  const currentDir = settings.waveDirection || 'cw';
+  const dirLabel = currentDir === 'dual' 
+    ? 'Dual Waves Intersecting (⇄)' 
+    : (currentDir === 'ccw' ? 'Anticlockwise (↺)' : 'Clockwise (↻)');
+
   const menu = Menu.buildFromTemplate([
-    { label: 'Screen Vibes Settings', click: () => { createPanel(true); } },
+    { label: 'Screen Vibes - Developed By Sachin', click: () => { createPanel(true); } },
     { type: 'separator' },
     {
       label: 'Traveling Light Wave',
@@ -200,17 +205,21 @@ function updateTrayMenu() {
       },
     },
     {
-      label: `Direction: ${settings.waveDirection === 'ccw' ? 'Anticlockwise (↺)' : 'Clockwise (↻)'}`,
+      label: `Direction: ${dirLabel}`,
       click: () => {
-        settings.waveDirection = settings.waveDirection === 'cw' ? 'ccw' : 'cw';
+        if (settings.waveDirection === 'cw') settings.waveDirection = 'ccw';
+        else if (settings.waveDirection === 'ccw') settings.waveDirection = 'dual';
+        else settings.waveDirection = 'cw';
         saveSettings();
         broadcastSettings();
       },
     },
     {
-      label: 'Reverse Direction (⇄)',
-      click: () => {
-        settings.waveDirection = settings.waveDirection === 'cw' ? 'ccw' : 'cw';
+      label: 'Dual Waves (⇄ Intersecting)',
+      type: 'checkbox',
+      checked: settings.waveDirection === 'dual',
+      click: (item) => {
+        settings.waveDirection = item.checked ? 'dual' : 'cw';
         saveSettings();
         broadcastSettings();
       },

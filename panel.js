@@ -81,10 +81,11 @@ function render() {
   $('waveColor1').value = s.waveColor1 || s.color1 || '#00f5ff';
   $('waveColor2').value = s.waveColor2 || s.color2 || '#ff00e5';
 
-  // Direction buttons active state
-  const isCW = s.waveDirection !== 'ccw';
-  $('btn-cw').classList.toggle('active', isCW);
-  $('btn-ccw').classList.toggle('active', !isCW);
+  // Direction buttons active state: Clockwise, Anticlockwise, Dual Waves
+  const dir = s.waveDirection || 'cw';
+  $('btn-cw').classList.toggle('active', dir === 'cw');
+  $('btn-ccw').classList.toggle('active', dir === 'ccw');
+  $('btn-dual').classList.toggle('active', dir === 'dual');
 
   // Audio controls
   $('mode').value = s.mode || 'bars';
@@ -127,7 +128,8 @@ const push = () => {
 // ==========================================
 const prevCanvas = $('previewCanvas');
 const prevCtx = prevCanvas.getContext('2d');
-let previewHeadU = 0;
+let previewHeadU1 = 0;   // Wave 1
+let previewHeadU2 = 0.5; // Wave 2 (opposite direction)
 let prevLastTime = performance.now();
 
 function hex2rgb(h) {
@@ -182,94 +184,59 @@ function getPrevCorner(edgeA, edgeB, W, H) {
   return null;
 }
 
-function getPrevWaveColor(p, u, now) {
+function getPrevWaveColor(p, u, now, waveIndex = 0) {
   if (!s) return [0, 245, 255];
   const mode = s.waveColorMode || 'rainbow';
 
   if (mode === 'rainbow') {
-    const hue = ((u * 360) + (now * 0.05)) % 360;
+    const hueOffset = waveIndex === 1 ? 180 : 0;
+    const hue = ((u * 360) + (now * 0.05) + hueOffset) % 360;
     return hsl2rgb(hue < 0 ? hue + 360 : hue, 1.0, 0.55);
   }
   if (mode === 'gradient') {
     const c1 = hex2rgb(s.waveColor1 || s.color1 || '#00f5ff');
     const c2 = hex2rgb(s.waveColor2 || s.color2 || '#ff00e5');
-    return lerpColor(c1, c2, p);
+    return waveIndex === 1 ? lerpColor(c2, c1, p) : lerpColor(c1, c2, p);
   }
   if (mode === 'head-trail') {
     const cHead = hex2rgb(s.waveHeadColor || '#ffffff');
-    const cTrail1 = hex2rgb(s.waveColor1 || '#00f5ff');
-    const cTrail2 = hex2rgb(s.waveColor2 || '#ff00e5');
+    const cTrail1 = hex2rgb(waveIndex === 1 ? (s.waveColor2 || '#ff00e5') : (s.waveColor1 || '#00f5ff'));
+    const cTrail2 = hex2rgb(waveIndex === 1 ? (s.waveColor1 || '#00f5ff') : (s.waveColor2 || '#ff00e5'));
     if (p < 0.15) return lerpColor(cHead, cTrail1, p / 0.15);
     return lerpColor(cTrail1, cTrail2, (p - 0.15) / 0.85);
   }
   if (mode === 'solid') {
+    if (waveIndex === 1 && s.waveColor2) return hex2rgb(s.waveColor2);
     return hex2rgb(s.waveColor1 || '#00f5ff');
   }
   if (mode === 'sync') {
     if (s.rainbow) {
-      const hue = ((u * 360) + (now * 0.05)) % 360;
+      const hueOffset = waveIndex === 1 ? 180 : 0;
+      const hue = ((u * 360) + (now * 0.05) + hueOffset) % 360;
       return hsl2rgb(hue < 0 ? hue + 360 : hue, 1.0, 0.55);
     }
     const c1 = hex2rgb(s.color1 || '#00f5ff');
     const c2 = hex2rgb(s.color2 || '#ff00e5');
-    return lerpColor(c1, c2, p);
+    return waveIndex === 1 ? lerpColor(c2, c1, p) : lerpColor(c1, c2, p);
   }
   return hex2rgb(s.waveColor1 || '#00f5ff');
 }
 
-function drawPreview(now) {
-  requestAnimationFrame(drawPreview);
-  const dt = Math.min((now - prevLastTime) / 1000, 0.1);
-  prevLastTime = now;
-
-  const W = prevCanvas.width;
-  const H = prevCanvas.height;
-
-  // Clear preview
-  prevCtx.fillStyle = '#0a0a10';
-  prevCtx.fillRect(0, 0, W, H);
-
-  // Subtle interior grid / laptop desktop preview background
-  prevCtx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
-  prevCtx.lineWidth = 1;
-  for (let x = 20; x < W; x += 20) {
-    prevCtx.beginPath(); prevCtx.moveTo(x, 0); prevCtx.lineTo(x, H); prevCtx.stroke();
-  }
-  for (let y = 20; y < H; y += 20) {
-    prevCtx.beginPath(); prevCtx.moveTo(0, y); prevCtx.lineTo(W, y); prevCtx.stroke();
-  }
-
-  if (!s || s.waveEnabled === false) {
-    // Show paused state on preview
-    prevCtx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-    prevCtx.font = '11px system-ui, sans-serif';
-    prevCtx.textAlign = 'center';
-    prevCtx.fillText('Light Wave Disabled', W / 2, H / 2 + 4);
-    $('previewBadge').textContent = '○ Disabled';
-    return;
-  }
-
-  const dirSign = (s.waveDirection === 'ccw') ? -1 : 1;
-  const speed = (s.waveSpeed || 1.0) * 0.15;
-  previewHeadU = (previewHeadU + dirSign * speed * dt) % 1;
-  if (previewHeadU < 0) previewHeadU += 1;
-
-  $('previewBadge').textContent = `${s.waveDirection === 'ccw' ? '↺ CCW' : '↻ CW'} ${(s.waveSpeed || 1.0).toFixed(1)}x`;
-
+function drawMiniWave(now, headU, dirSign, waveIndex, W, H) {
   const glowMul = s.waveGlow !== undefined ? s.waveGlow : 1.0;
   const trailLen = Math.max(0.1, Math.min(0.85, s.waveLength || 0.35));
-  const STEPS = 60;
+  const STEPS = 50;
   const vertices = [];
 
   for (let i = STEPS; i >= 0; i--) {
     const p = i / STEPS;
-    let u = (previewHeadU - dirSign * (p * trailLen)) % 1;
+    let u = (headU - dirSign * (p * trailLen)) % 1;
     if (u < 0) u += 1;
 
     const pt = getPrevPerimeterPoint(u, W, H);
     pt.p = p;
     pt.u = u;
-    pt.color = getPrevWaveColor(p, u, now);
+    pt.color = getPrevWaveColor(p, u, now, waveIndex);
     pt.alpha = Math.pow(1 - p, 1.6) * glowMul;
 
     if (vertices.length > 0) {
@@ -322,6 +289,64 @@ function drawPreview(now) {
   prevCtx.fill();
   prevCtx.restore();
 }
+
+function drawPreview(now) {
+  requestAnimationFrame(drawPreview);
+  const dt = Math.min((now - prevLastTime) / 1000, 0.1);
+  prevLastTime = now;
+
+  const W = prevCanvas.width;
+  const H = prevCanvas.height;
+
+  // Clear preview with clay-styled screen background
+  prevCtx.fillStyle = '#0a0a14';
+  prevCtx.fillRect(0, 0, W, H);
+
+  // Subtle interior grid
+  prevCtx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+  prevCtx.lineWidth = 1;
+  for (let x = 20; x < W; x += 20) {
+    prevCtx.beginPath(); prevCtx.moveTo(x, 0); prevCtx.lineTo(x, H); prevCtx.stroke();
+  }
+  for (let y = 20; y < H; y += 20) {
+    prevCtx.beginPath(); prevCtx.moveTo(0, y); prevCtx.lineTo(W, y); prevCtx.stroke();
+  }
+
+  if (!s || s.waveEnabled === false) {
+    prevCtx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+    prevCtx.font = '11px system-ui, sans-serif';
+    prevCtx.textAlign = 'center';
+    prevCtx.fillText('Light Wave Disabled', W / 2, H / 2 + 4);
+    $('previewBadge').textContent = '○ Disabled';
+    return;
+  }
+
+  const dir = s.waveDirection || 'cw';
+  const speed = (s.waveSpeed || 1.0) * 0.15;
+
+  if (dir === 'dual') {
+    // Both waves moving in opposite directions, intersecting & crossing
+    previewHeadU1 = (previewHeadU1 + speed * dt) % 1;
+    if (previewHeadU1 < 0) previewHeadU1 += 1;
+
+    previewHeadU2 = (previewHeadU2 - speed * dt) % 1;
+    if (previewHeadU2 < 0) previewHeadU2 += 1;
+
+    $('previewBadge').textContent = `⇄ DUAL ${(s.waveSpeed || 1.0).toFixed(1)}x`;
+    drawMiniWave(now, previewHeadU1, 1, 0, W, H);
+    drawMiniWave(now, previewHeadU2, -1, 1, W, H);
+  } else if (dir === 'ccw') {
+    previewHeadU1 = (previewHeadU1 - speed * dt) % 1;
+    if (previewHeadU1 < 0) previewHeadU1 += 1;
+    $('previewBadge').textContent = `↺ CCW ${(s.waveSpeed || 1.0).toFixed(1)}x`;
+    drawMiniWave(now, previewHeadU1, -1, 0, W, H);
+  } else {
+    previewHeadU1 = (previewHeadU1 + speed * dt) % 1;
+    if (previewHeadU1 < 0) previewHeadU1 += 1;
+    $('previewBadge').textContent = `↻ CW ${(s.waveSpeed || 1.0).toFixed(1)}x`;
+    drawMiniWave(now, previewHeadU1, 1, 0, W, H);
+  }
+}
 requestAnimationFrame(drawPreview);
 
 // ==========================================
@@ -366,7 +391,7 @@ requestAnimationFrame(drawPreview);
     $('presets').appendChild(b);
   });
 
-  // Direction Buttons
+  // Direction Buttons: Clockwise, Anticlockwise, and Dual Waves
   $('btn-cw').onclick = () => {
     s.waveDirection = 'cw';
     render();
@@ -379,8 +404,8 @@ requestAnimationFrame(drawPreview);
     push();
   };
 
-  $('btn-reverse').onclick = () => {
-    s.waveDirection = (s.waveDirection === 'cw') ? 'ccw' : 'cw';
+  $('btn-dual').onclick = () => {
+    s.waveDirection = 'dual';
     render();
     push();
   };

@@ -36,11 +36,11 @@ Screen Vibes is styled with a tactile, custom **Claymorphism** interface—featu
 
 ---
 
-### 🔄 2. Real-Time Direction Controls
-- **↻ Clockwise**: The light wave circulates clockwise around the screen perimeter.
-- **↺ Anticlockwise**: The light wave circulates in the opposite counter-clockwise direction.
-- **⇄ Instant Reverse**: Inverts the wave's trajectory on the fly. Because position is computed continuously using elapsed frame delta ($\Delta t$), reversing direction inverts velocity while strictly preserving current coordinates. The wave smoothly changes direction with **zero position jumping or teleportation**.
-- **Interactive Mini Screen Preview**: A miniature clay-bezeled laptop screen inside the settings panel renders a real-time 60 FPS visual preview of the wave, showing its exact direction, speed, colors, and glow.
+### 🔄 2. Real-Time Direction & Dual Crossing Waves
+- **↻ Clockwise**: A single light wave circulates clockwise around all four screen edges.
+- **↺ Anticlockwise**: A single light wave circulates counter-clockwise.
+- **⇄ Dual Waves (Intersecting)**: Two light waves circulate along the screen borders simultaneously in **opposite directions** (one clockwise, one anticlockwise). As they travel, they meet each other, **intersect and pass right through each other** with an amplified additive luminous flash, and continue circulating endlessly around the perimeter.
+- **Interactive Mini Screen Preview**: A miniature clay-bezeled laptop screen inside the settings panel renders a real-time 60 FPS visual preview of the wave(s), showing both single and dual crossing waves in real time.
 
 ---
 
@@ -98,7 +98,7 @@ Designed by **Sachin**, the settings panel departs from generic flat templates i
 | Setting | Range / Options | Description |
 | :--- | :--- | :--- |
 | **Light Wave Toggle** | `ON` / `OFF` | Master switch to enable or disable perimeter wave animation. |
-| **Direction** | `↻ Clockwise`, `↺ Anticlockwise`, `⇄ Reverse` | Controls wave travel direction with seamless reversal. |
+| **Direction** | `↻ Clockwise`, `↺ Anticlockwise`, `⇄ Dual Waves` | Select single wave travel or dual opposite intersecting waves. |
 | **Animation Speed** | `0.2x` – `3.0x` | Multiplier for perimeter cycle duration. |
 | **Wave Length** | `10%` – `80%` | Fraction of the total screen perimeter spanned by the wave and trail. |
 | **Glow Intensity** | `20%` – `200%` | Multiplier for radial bloom, shadow blur, and inward ambient diffusion. |

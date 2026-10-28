@@ -61,7 +61,7 @@ async function startAudio() {
     const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
 
     // Note: Do NOT stop the video track, as some Chromium versions terminate the entire capture session!
-    // Instead, simply disable the video track to save CPU while keeping the capture session active.
+    // Disabling video track avoids decoding overhead while keeping capture active.
     const videoTracks = stream.getVideoTracks();
     if (videoTracks && videoTracks.length > 0) {
       videoTracks.forEach((t) => { t.enabled = false; });
@@ -76,7 +76,7 @@ async function startAudio() {
     logDebug(`Audio track connected: label="${audioTrack.label}", readyState=${audioTrack.readyState}`);
 
     audioTrack.onended = () => {
-      logDebug('Audio track ended. Reconnecting in 2 seconds...');
+      logDebug('Audio track ended. Reconnecting in 2s...');
       cleanupAudio();
       setTimeout(startAudio, 2000);
     };
@@ -99,7 +99,7 @@ async function startAudio() {
     analyser = ac.createAnalyser();
     analyser.fftSize = 2048;
     analyser.smoothingTimeConstant = 0.5;
-    src.connect(analyser); // Not connected to destination/speakers -> no echo
+    src.connect(analyser);
     freq = new Uint8Array(analyser.frequencyBinCount);
 
     logDebug('Audio pipeline established and active');
@@ -126,12 +126,12 @@ function cleanupAudio() {
 
 startAudio();
 
-// Periodic watchdog: logs status, checks track health and auto-resumes AudioContext
+// Periodic watchdog: checks track health and auto-resumes AudioContext
 setInterval(() => {
   const acState = ac ? ac.state : 'null';
   const trackState = audioTrack ? audioTrack.readyState : 'null';
   const maxVal = maxFreqRecent;
-  maxFreqRecent = 0; // Reset for next interval
+  maxFreqRecent = 0;
 
   logDebug(`[Audio Status] AC: ${acState} | Track: ${trackState} | MaxFreq: ${maxVal}/255 (${Math.round(maxVal / 255 * 100)}%)`);
 
@@ -152,7 +152,6 @@ function updateBands() {
   const sens = S.sensitivity || 1.3;
   const smooth = S.smoothing !== undefined ? S.smoothing : 0.7;
 
-  // Track max frequency value seen for debug logging
   for (let i = 0; i < freq.length; i++) {
     if (freq[i] > maxFreqRecent) maxFreqRecent = freq[i];
   }
@@ -162,7 +161,6 @@ function updateBands() {
     const b = Math.floor(Math.pow((k + 1) / BARS, 2) * 350) + 2;
     let sum = 0;
     for (let i = a; i < b; i++) sum += freq[i];
-    // Dynamic sensitivity scaling with exponential response
     const normalizedAvg = sum / (b - a) / 255;
     const v = Math.min(1.0, Math.pow(normalizedAvg, 1.1) * sens * 2.2);
     bands[k] = bands[k] * smooth + v * (1 - smooth);
@@ -201,7 +199,6 @@ function lerpColor(c1, c2, t) {
 
 const css = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${Math.max(0, Math.min(1, a))})`;
 
-// Audio edge color sampler
 function audioColorAt(t) {
   if (S.rainbow) return hsl2rgb((t * 300 + performance.now() / 25) % 360, 1, 0.55);
   const a = hex2rgb(S.color1 || '#00f5ff');
@@ -209,26 +206,28 @@ function audioColorAt(t) {
   return lerpColor(a, b, t);
 }
 
-// Traveling wave color sampler
-function getWaveColor(p, u, now) {
+// Wave color sampler supporting multiple waves
+function getWaveColor(p, u, now, waveIndex = 0) {
   const mode = S.waveColorMode || 'rainbow';
 
   if (mode === 'rainbow') {
-    // Continuous flowing spectrum along perimeter & time
-    const hue = ((u * 360) + (now * 0.04)) % 360;
+    // Wave 2 has 180 deg phase offset so both waves contrast beautifully
+    const hueOffset = waveIndex === 1 ? 180 : 0;
+    const hue = ((u * 360) + (now * 0.04) + hueOffset) % 360;
     return hsl2rgb(hue < 0 ? hue + 360 : hue, 1.0, 0.55);
   }
 
   if (mode === 'gradient') {
     const c1 = hex2rgb(S.waveColor1 || S.color1 || '#00f5ff');
     const c2 = hex2rgb(S.waveColor2 || S.color2 || '#ff00e5');
-    return lerpColor(c1, c2, p);
+    // Wave 1 blends c1 -> c2; Wave 2 blends c2 -> c1
+    return waveIndex === 1 ? lerpColor(c2, c1, p) : lerpColor(c1, c2, p);
   }
 
   if (mode === 'head-trail') {
     const cHead = hex2rgb(S.waveHeadColor || '#ffffff');
-    const cTrail1 = hex2rgb(S.waveColor1 || '#00f5ff');
-    const cTrail2 = hex2rgb(S.waveColor2 || '#ff00e5');
+    const cTrail1 = hex2rgb(waveIndex === 1 ? (S.waveColor2 || '#ff00e5') : (S.waveColor1 || '#00f5ff'));
+    const cTrail2 = hex2rgb(waveIndex === 1 ? (S.waveColor1 || '#00f5ff') : (S.waveColor2 || '#ff00e5'));
     if (p < 0.15) {
       return lerpColor(cHead, cTrail1, p / 0.15);
     }
@@ -236,17 +235,21 @@ function getWaveColor(p, u, now) {
   }
 
   if (mode === 'solid') {
+    if (waveIndex === 1 && S.waveColor2) {
+      return hex2rgb(S.waveColor2);
+    }
     return hex2rgb(S.waveColor1 || '#00f5ff');
   }
 
   if (mode === 'sync') {
     if (S.rainbow) {
-      const hue = ((u * 360) + (now * 0.04)) % 360;
+      const hueOffset = waveIndex === 1 ? 180 : 0;
+      const hue = ((u * 360) + (now * 0.04) + hueOffset) % 360;
       return hsl2rgb(hue < 0 ? hue + 360 : hue, 1.0, 0.55);
     }
     const c1 = hex2rgb(S.color1 || '#00f5ff');
     const c2 = hex2rgb(S.color2 || '#ff00e5');
-    return lerpColor(c1, c2, p);
+    return waveIndex === 1 ? lerpColor(c2, c1, p) : lerpColor(c1, c2, p);
   }
 
   return hex2rgb(S.waveColor1 || '#00f5ff');
@@ -260,16 +263,12 @@ function getPerimeterPoint(u, width, height) {
   let s = ((u % 1) + 1) % 1 * P;
 
   if (s < width) {
-    // Top edge: (0, 0) -> (width, 0)
     return { x: Math.max(0, Math.min(width, s)), y: 0, edge: 0, nx: 0, ny: 1 };
   } else if (s < width + height) {
-    // Right edge: (width, 0) -> (width, height)
     return { x: width, y: Math.max(0, Math.min(height, s - width)), edge: 1, nx: -1, ny: 0 };
   } else if (s < 2 * width + height) {
-    // Bottom edge: (width, height) -> (0, height)
     return { x: Math.max(0, Math.min(width, 2 * width + height - s)), y: height, edge: 2, nx: 0, ny: -1 };
   } else {
-    // Left edge: (0, height) -> (0, 0)
     return { x: 0, y: Math.max(0, Math.min(height, P - s)), edge: 3, nx: 1, ny: 0 };
   }
 }
@@ -285,7 +284,8 @@ function getCornerBetween(edgeA, edgeB, width, height) {
 // ==========================================
 // 4. Continuous Traveling Light Wave Engine
 // ==========================================
-let currentHeadU = 0;
+let currentHeadU1 = 0;   // Wave 1: Circulates Clockwise (+1)
+let currentHeadU2 = 0.5; // Wave 2: Circulates Anticlockwise (-1), starts at opposite perimeter
 let lastTimestamp = performance.now();
 
 function updateWavePosition(now) {
@@ -294,17 +294,30 @@ function updateWavePosition(now) {
 
   if (!S || S.waveEnabled === false) return;
 
-  const dirSign = (S.waveDirection === 'ccw') ? -1 : 1;
+  const mode = S.waveDirection || 'cw';
   const speed = (S.waveSpeed || 1.0) * 0.12;
 
-  currentHeadU = (currentHeadU + dirSign * speed * dt) % 1;
-  if (currentHeadU < 0) currentHeadU += 1;
+  if (mode === 'cw') {
+    currentHeadU1 = (currentHeadU1 + speed * dt) % 1;
+    if (currentHeadU1 < 0) currentHeadU1 += 1;
+  } else if (mode === 'ccw') {
+    currentHeadU1 = (currentHeadU1 - speed * dt) % 1;
+    if (currentHeadU1 < 0) currentHeadU1 += 1;
+  } else if (mode === 'dual') {
+    // Wave 1 travels Clockwise (+1)
+    currentHeadU1 = (currentHeadU1 + speed * dt) % 1;
+    if (currentHeadU1 < 0) currentHeadU1 += 1;
+
+    // Wave 2 travels Anticlockwise (-1)
+    currentHeadU2 = (currentHeadU2 - speed * dt) % 1;
+    if (currentHeadU2 < 0) currentHeadU2 += 1;
+  }
 }
 
 function drawInwardDiffusion(vertices, thickness, glowMul) {
   const depth = thickness * 2.2;
   g.save();
-  g.globalCompositeOperation = 'lighter';
+  g.globalCompositeOperation = 'lighter'; // Additive blending for rich light wash
 
   for (let i = 1; i < vertices.length; i++) {
     const p1 = vertices[i - 1];
@@ -342,13 +355,11 @@ function drawInwardDiffusion(vertices, thickness, glowMul) {
   g.restore();
 }
 
-function drawTravelingWave(now) {
-  if (!S || S.waveEnabled === false) return;
-
+// Draws a single traveling wave around the perimeter
+function drawSingleWave(now, headU, dirSign, waveIndex) {
   const glowMul = S.waveGlow !== undefined ? S.waveGlow : 1.0;
   const thickness = S.waveThickness || 18;
   const trailLen = Math.max(0.05, Math.min(0.85, S.waveLength || 0.35));
-  const dirSign = (S.waveDirection === 'ccw') ? -1 : 1;
 
   const STEPS = 90;
   const vertices = [];
@@ -356,13 +367,13 @@ function drawTravelingWave(now) {
   for (let i = STEPS; i >= 0; i--) {
     const p = i / STEPS;
     const distBehind = p * trailLen;
-    let u = (currentHeadU - dirSign * distBehind) % 1;
+    let u = (headU - dirSign * distBehind) % 1;
     if (u < 0) u += 1;
 
     const pt = getPerimeterPoint(u, W, H);
     pt.p = p;
     pt.u = u;
-    pt.color = getWaveColor(p, u, now);
+    pt.color = getWaveColor(p, u, now, waveIndex);
     pt.alpha = Math.pow(1 - p, 1.6) * glowMul;
     pt.thickness = Math.max(2, thickness * (0.35 + 0.65 * (1 - p)));
 
@@ -392,10 +403,10 @@ function drawTravelingWave(now) {
 
   if (vertices.length < 2) return;
 
-  // Pass 1: Volumetric Inward Diffusion
+  // Pass 1: Inward diffusion
   drawInwardDiffusion(vertices, thickness, glowMul);
 
-  // Pass 2: Soft Radiant Ambient Aura
+  // Pass 2: Soft ambient glowing ribbon
   g.save();
   g.lineJoin = 'round';
   g.lineCap = 'round';
@@ -415,7 +426,7 @@ function drawTravelingWave(now) {
   }
   g.restore();
 
-  // Pass 3: Crisp Neon Beam along border
+  // Pass 3: Crisp neon beam
   g.save();
   g.lineJoin = 'round';
   g.lineCap = 'round';
@@ -434,7 +445,7 @@ function drawTravelingWave(now) {
   }
   g.restore();
 
-  // Pass 4: Bright Core Filament near Head
+  // Pass 4: Bright core filament
   g.save();
   g.lineJoin = 'round';
   g.lineCap = 'round';
@@ -455,7 +466,7 @@ function drawTravelingWave(now) {
   }
   g.restore();
 
-  // Pass 5: Luminous Head Beacon (Smooth Radial Bloom)
+  // Pass 5: Luminous radial head beacon
   const headPt = vertices[vertices.length - 1];
   const headRadius = Math.max(25, thickness * 2.8 * glowMul);
 
@@ -473,12 +484,29 @@ function drawTravelingWave(now) {
   g.restore();
 }
 
+function drawTravelingWave(now) {
+  if (!S || S.waveEnabled === false) return;
+
+  const mode = S.waveDirection || 'cw';
+
+  if (mode === 'dual') {
+    // Two light waves moving in opposite directions around the edges!
+    // They intersect, cross through each other seamlessly, and keep going continuously.
+    drawSingleWave(now, currentHeadU1, 1, 0);   // Clockwise wave
+    drawSingleWave(now, currentHeadU2, -1, 1);  // Anticlockwise wave
+  } else if (mode === 'ccw') {
+    drawSingleWave(now, currentHeadU1, -1, 0);  // Single Anticlockwise wave
+  } else {
+    drawSingleWave(now, currentHeadU1, 1, 0);   // Single Clockwise wave
+  }
+}
+
 // ==========================================
 // 5. Audio Reactive Edge Drawing (Zero on Silence)
 // ==========================================
 function drawEdge(L) {
   const n = BARS * 2, w = L / n;
-  const T = S.thickness || 140; // Thickness setting applied directly
+  const T = S.thickness || 140;
   const kOf = (i) => (i < BARS ? BARS - 1 - i : i - BARS);
 
   let avg = 0, bass = 0;
@@ -491,7 +519,6 @@ function drawEdge(L) {
     for (let i = 0; i < n; i++) {
       const k = kOf(i);
       const val = bands[k];
-      // Zero bar height on silence: No Math.max(2, ...)
       if (val < 0.008) continue;
       const h = val * T;
       const c = audioColorAt(k / BARS);
@@ -502,7 +529,7 @@ function drawEdge(L) {
     }
     g.shadowBlur = 0;
   } else if (S.mode === 'wave') {
-    if (avg < 0.008) return; // Completely clear on silence
+    if (avg < 0.008) return;
     const grad = g.createLinearGradient(0, 0, L, 0);
     grad.addColorStop(0, css(audioColorAt(1), 0.85));
     grad.addColorStop(0.5, css(audioColorAt(0), 0.85));
@@ -521,7 +548,7 @@ function drawEdge(L) {
     g.fill();
     g.shadowBlur = 0;
   } else if (S.mode === 'glow' || S.mode === 'pulse') {
-    if (avg < 0.008 && bass < 0.008) return; // Completely clear on silence
+    if (avg < 0.008 && bass < 0.008) return;
     for (let i = 0; i < n; i++) {
       const k = kOf(i);
       const val = S.mode === 'pulse' ? bass : bands[k];
@@ -546,10 +573,10 @@ function frame(now) {
 
   g.clearRect(0, 0, W, H);
 
-  // Update traveling wave position smoothly
+  // Update positions for waves
   updateWavePosition(now);
 
-  // Draw continuous perimeter light wave around all four borders
+  // Draw traveling wave(s) (supports dual intersecting waves)
   drawTravelingWave(now);
 
   // Draw audio reactive visualization if enabled
